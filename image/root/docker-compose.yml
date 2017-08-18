@@ -14,13 +14,15 @@ services:
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
-  pass: images/pass
-    - DISPLAY
-    - ID_RSA
-    - KNOWN_HOSTS
-    - USERNAME
-    - EMAIL
-    - GPG_KEY_ID
+  pass:
+    image: images/pass
+    environment: 
+      - DISPLAY
+      - ID_RSA
+      - KNOWN_HOSTS
+      - USERNAME
+      - EMAIL
+      - GPG_KEY_ID
   chromium:
     image: sassmann/debian-chromium
     volumes:
