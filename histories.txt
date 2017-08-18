@@ -1,0 +1,26 @@
+    1  pass show          
+    2  pass show www.amwell.com                     
+    3  gpg --import gpg2.txt                        
+    4  pass show www.amwell.com                     
+    5  cp ~/.password-store/www.amwell.com.gpg      
+    6  cp ~/.password-store/www.amwell.com.gpg .    
+    7  gpg www.amwell.com.gpg                       
+    8  gpg --list-secret-keys                       
+    9  echo ${GPG_KEY_ID}                           
+   10  apk search gpg     
+   11  apk update         
+   12  apk upgrade        
+   13  apk search gpg     
+   14  history            
+   15  history | less     
+   16  history 
+   
+   
+       1  apk search gpg
+    2  gpg --list-secret-keys
+    3  gpg --version
+    4  gpg --version
+    5  pass show www.amwell.com
+    6  pass show www.amwell.com
+    7  pass 
+    8  history 
