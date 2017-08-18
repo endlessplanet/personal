@@ -23,4 +23,4 @@ then
         chmod 0555 ~/.password-store/.git/hooks/post-commit &&
         mkdir /workspace/pass
 fi &&
-    forever /root/.c9/server.js -w /workspace/pass --auth "user:password" --listen 0.0.0.0
+    forever ~/.c9/server.js -w /workspace/pass --auth "user:password" --listen 0.0.0.0

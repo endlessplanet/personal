@@ -18,4 +18,6 @@ apk update &&
     adduser -D user &&
     mkdir /workspace &&
     chown user:user /workspace &&
+    cp -r /root/.c9 /home/user/.c9 &&
+    chown --recursive user:user /home/user/.c9 &&
     rm -rf /var/cache/apk/*
