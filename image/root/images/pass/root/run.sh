@@ -16,4 +16,6 @@ apk update &&
     make && 
     make install &&
     adduser -D user &&
+    mkdir /workspace &&
+    chown user:user /workspace &&
     rm -rf /var/cache/apk/*
