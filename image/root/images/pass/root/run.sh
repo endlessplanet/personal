@@ -4,7 +4,6 @@ apk update &&
     apk upgrade &&
     apk add --no-cache git &&
     apk add --no-cache openssh &&
-    apk add --no-cache pass &&
     apk add --no-cache findutils &&
     apk add --no-cache tree &&
     apk add --no-cache make &&
