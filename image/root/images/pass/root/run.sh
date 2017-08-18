@@ -9,6 +9,7 @@ apk update &&
     apk add --no-cache tree &&
     apk add --no-cache make &&
     apk add --no-cache bash &&
+    apk add --no-cache gpgme &&
     mkdir /opt/password-store &&
     cd /opt/password-store &&
     git clone https://git.zx2c4.com/password-store &&
