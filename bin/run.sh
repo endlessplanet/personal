@@ -7,6 +7,7 @@ docker \
     --volume /var/run/docker.sock:/var/run/docker.sock:ro \
     --env DISPLAY \
     --env ID_RSA="$(cat ~/.ssh/vxD3wgSe_id_rsa)" \
+    --env ID_RSA_PUB="$(cat ~/.ssh/vxD3wgSe_id_rsa.pub)" \
     --env KNOWN_HOSTS="$(cat ~/.ssh/known_hosts)" \
     --env USERNAME="Emory Merryman" \
     --env EMAIL="emory.merryman@gmail.com" \

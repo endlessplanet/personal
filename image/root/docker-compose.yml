@@ -7,6 +7,7 @@ services:
     environment:
       - DISPLAY
       - ID_RSA
+      - ID_RSA_PUB
       - KNOWN_HOSTS
       - GROUP_NAME=endlessplanet
       - PROJECT_NAME=personal
@@ -21,6 +22,7 @@ services:
     environment: 
       - DISPLAY
       - ID_RSA
+      - ID_RSA_PUB
       - KNOWN_HOSTS
       - USERNAME
       - EMAIL
