@@ -1,0 +1,23 @@
+version: "2"
+services:
+  personal:
+    build: images/cloud9
+    environment:
+      - DISPLAY
+      - ID_RSA
+      - KNOWN_HOSTS
+      - GROUP_NAME=endlessplanet
+      - PROJECT_NAME=personal
+      - BRANCH=master
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:ro
+  chromium:
+    image: sassmann/debian-chromium
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /run/user/1000/pulse/native:/tmp/pulse
+      - /dev/shm:/home/user/Download
+    devices:
+      - /dev/dri/card0 
+    environment:
+      - DISPLAY
