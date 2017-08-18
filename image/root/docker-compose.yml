@@ -15,7 +15,7 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
   pass:
-    image: images/pass
+    build: images/pass
     environment: 
       - DISPLAY
       - ID_RSA
