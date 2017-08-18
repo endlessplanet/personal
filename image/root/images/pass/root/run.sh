@@ -15,5 +15,5 @@ apk update &&
     cd password-store &&
     make && 
     make install &&
-    adduser user &&
+    adduser -D user &&
     rm -rf /var/cache/apk/*
