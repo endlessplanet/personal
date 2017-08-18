@@ -20,4 +20,9 @@ apk update &&
     chown user:user /workspace &&
     cp -r /root/.c9 /home/user/.c9 &&
     chown --recursive user:user /home/user/.c9 &&
+    mkdir /home/user/.ssh &&
+    chmod 0700 /home/user/.ssh &&
+    cp /opt/docker/id_rsa /home/user/.ssh &&
+    chmod 0600 /home/user/.ssh/id_rsa &&
+    chown --recursive user:user /home/user/.ssh &&
     rm -rf /var/cache/apk/*

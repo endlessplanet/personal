@@ -1,5 +1,7 @@
 version: "2"
 services:
+  sshd:
+    image: panubo/sshd
   personal:
     build: images/cloud9
     environment:
