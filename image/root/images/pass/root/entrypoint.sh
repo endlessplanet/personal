@@ -1,11 +1,11 @@
 #!/bin/sh
 
-if [ ! -f /var/opt/secret1.key ]
+if [ ! -f ~/secret1.key ]
 then
-    echo "${GPG_PRIVATE_KEY}" > /var/opt//secret1.key &&
-        echo "${GPG_OWNER_TRUST}" > /var/opt/owner1.trust &&
-        gpg --batch --import /var/opt/secret1.key &&
-        gpg --batch --import-ownertrust /var/opt/owner1.trust &&
+    echo "${GPG_PRIVATE_KEY}" > ~/secret1.key &&
+        echo "${GPG_OWNER_TRUST}" > ~/owner1.trust &&
+        gpg --batch --import ~/secret1.key &&
+        gpg --batch --import-ownertrust ~/owner1.trust &&
         pass init ${GPG_KEY_ID} &&
         pass git init &&
         pass git config user.name "${USER_NAME}" &&
