@@ -23,6 +23,8 @@ services:
       - USERNAME
       - EMAIL
       - GPG_KEY_ID
+      - GPG_PRIVATE_KEY
+      - GPG_OWNER_TRUST
   chromium:
     image: sassmann/debian-chromium
     volumes:
