@@ -44,4 +44,5 @@ services:
   experiment:
     build: images/experiment
     environment:
+      - PROJECT_NAME="experiment"
       - ID_RSA
