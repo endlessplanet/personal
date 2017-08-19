@@ -2,6 +2,8 @@ version: "2"
 services:
   sshd:
     build: images/sshd
+    environment:
+      - ID_RSA_PUB
   personal:
     build: images/cloud9
     environment:
