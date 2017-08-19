@@ -3,3 +3,4 @@ User root
 IdentityFile ~/.ssh/id_rsa
 StrictHostKeyChecking no
 RemoteForward 8181:localhost:8181
+RemoteForward 80:localhost:8181
