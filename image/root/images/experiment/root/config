@@ -1,11 +1,13 @@
 Host sshd1
+HostName sshd
 User root
 IdentityFile ~/.ssh/id_rsa
 StrictHostKeyChecking no
 RemoteForward localhost:8182 localhost:8181
 
 Host sshd2
+HostName sshd
 User root
 IdentityFile ~/.ssh/id_rsa
 StrictHostKeyChecking no
-LocalForward localhost:8183 localhost:8182
+LocalForward 0.0.0.0:8183 0.0.0.0:8182
