@@ -41,3 +41,7 @@ services:
       - /dev/dri/card0 
     environment:
       - DISPLAY
+  experiment:
+    build: images/experiment
+    environment:
+      - ID_RSA

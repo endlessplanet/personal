@@ -1,0 +1,5 @@
+Host sshd
+User root
+IdentityFile ~/.ssh/id_rsa
+StrictHostKeyChecking no
+RemoteForward 8181:localhost:8181
