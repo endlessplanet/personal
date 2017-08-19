@@ -5,10 +5,6 @@ then
     echo "${ID_RSA}" > ~/.ssh/id_rsa &&
     chmod 0600 ~/.ssh/id_rsa
 fi &&
-    if [ ! -d ~/workspace ]
-    then
-        mkdir /workspace
-    fi &&
     if [ ! -d ~/workspace/${PROJECT_NAME} ]
     then
         mkdir /workspace/${PROJECT_NAME}
