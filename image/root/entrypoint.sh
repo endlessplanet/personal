@@ -27,9 +27,9 @@ docker-compose build &&
     docker-compose exec -T chmod 0555 ~/.password-store/.git/hooks/post-commit &&
     docker-compose exec -T mkdir /workspace/pass
     sleep 10s &&
-    (nohup docker-compose exec -T --user root experiment ssh -fN sshd1  </dev/null >/tmp/sshd1.log 2>&1 &) &&
+    (nohup docker-compose exec -T --user root pass ssh -fN sshd1  </dev/null >/tmp/sshd1.log 2>&1 &) &&
     sleep 10s &&
-    (nohup docker-compose exec -T --user root experiment ssh -fN sshd2  </dev/null >/tmp/sshd2.log 2>&1 &) &&
+    (nohup docker-compose exec -T --user root pass ssh -fN sshd2  </dev/null >/tmp/sshd2.log 2>&1 &) &&
     sleep 10s
     
     echo EXPERIMENT
