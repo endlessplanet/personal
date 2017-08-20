@@ -7,6 +7,7 @@ docker-compose build &&
     
     sleep 10s &&
     docker-compose ps &&
+    docker-compose logs pass &&
     
     echo PASS &&
     echo "${GPG_PRIVATE_KEY}" docker-compose exec -T pass tee ~/secret1.key &&
