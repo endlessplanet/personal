@@ -21,16 +21,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
   pass:
     build: images/experiment
-    environment: 
-      - DISPLAY
-      - ID_RSA
-      - ID_RSA_PUB
-      - KNOWN_HOSTS
-      - USERNAME
-      - EMAIL
-      - GPG_KEY_ID
-      - GPG_PRIVATE_KEY
-      - GPG_OWNER_TRUST
+    environment:
+      - PROJECT_NAME="pass"
   chromium:
     image: sassmann/debian-chromium
     volumes:
@@ -45,4 +37,3 @@ services:
     build: images/experiment
     environment:
       - PROJECT_NAME="experiment"
-      - ID_RSA

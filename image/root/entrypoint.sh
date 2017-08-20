@@ -29,7 +29,6 @@ docker-compose build &&
     docker-compose exec -T pass git rebase origin/master &&
     docker-compose exec -T pass cp /opt/docker/post-commit.sh ~/.password-store/.git/hooks/post-commit &&
     docker-compose exec -T pass chmod 0555 ~/.password-store/.git/hooks/post-commit &&
-    docker-compose exec -T pass mkdir /workspace/pass
     sleep 10s &&
     (nohup docker-compose exec -T --user root pass ssh -fN sshd1  </dev/null >/tmp/sshd1.log 2>&1 &) &&
     sleep 10s &&
