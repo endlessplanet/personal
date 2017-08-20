@@ -10,8 +10,8 @@ docker-compose build &&
     docker-compose logs pass &&
     
     echo PASS &&
-    echo "${GPG_PRIVATE_KEY}" | docker-compose exec -T pass tee /home/user/secret1.key &&
-    echo "${GPG_OWNER_TRUST}" | docker-compose exec -T pass tee /home/user/owner1.trust &&
+    echo "${GPG_PRIVATE_KEY}" | docker-compose exec pass tee /home/user/secret1.key &&
+    echo "${GPG_OWNER_TRUST}" | docker-compose exec pass tee /home/user/owner1.trust &&
     docker-compose exec -T pass gpg --batch --import /home/user/secret1.key &&
     docker-compose exec -T pass gpg --batch --import-ownertrust /home/user/owner1.trust &&
     docker-compose exec pass init ${GPG_KEY_ID} &&
