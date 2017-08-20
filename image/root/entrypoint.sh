@@ -5,6 +5,9 @@ docker-compose build &&
     docker-compose rm -fv &&
     docker-compose up -d chromium sshd pass experiment &&
     
+    sleep 10s &&
+    docker-compose ps &&
+    
     echo PASS &&
     echo "${GPG_PRIVATE_KEY}" docker-compose exec -T pass tee ~/secret1.key &&
     echo "${GPG_OWNER_TRUST}" docker-compose exec -T pass tee ~/owner1.trust &&
