@@ -10,20 +10,20 @@ docker-compose build &&
     docker-compose logs pass &&
     
     echo PASS &&
-    echo "${GPG_PRIVATE_KEY}" | docker-compose exec pass tee /home/user/secret1.key &&
-    echo "${GPG_OWNER_TRUST}" | docker-compose exec pass tee /home/user/owner1.trust &&
+    docker-compose exec -T pass sh /opt/docker/write_it.sh /home/user/secret1.key "${GPG_SECRET_KEY}" &&
+    docker-compose exec -T pass sh /opt/docker/write_it.sh /home/user/owner1.trust "${GPG_OWNER_TRUST}" &&
     docker-compose exec -T pass gpg --batch --import /home/user/secret1.key &&
     docker-compose exec -T pass gpg --batch --import-ownertrust /home/user/owner1.trust &&
-    docker-compose exec pass init ${GPG_KEY_ID} &&
+    docker-compose exec -T pass init ${GPG_KEY_ID} &&
     docker-compose exec -T pass git init &&
     docker-compose exec -T pass git config user.name "${USER_NAME}" &&
     docker-compose exec -T pass git config user.email "${EMAIL}" &&
     docker-compose exec -T pass git remote add origin git@github.com:desertedscorpion/passwordstore.git &&
     docker-compose exec -T pass mkdir /home/user/.ssh &&
     docker-compose exec -T pass chmod 0700 /home/user/.ssh &&
-    echo "${ID_RSA}" | docker-compose exec -T pass | tee /home/user/.ssh/id_rsa &&
+    docker-compose exec -T pass sh /opt/docker/write_it.sh /home/user/.ssh/id_rsa "${ID_RSA}" &&
     docker-compose exec -T pass chmod 0600 /home/user/.ssh/id_rsa &&
-    echo "${KNOWN_HOSTS}" | docker-compose exec -T pass /home/user/.ssh/known_hosts &&
+    docker-compose exec -T pass sh /opt/docker/write_it.sh /home/user/.ssh/known_hosts "${KNOWN_HOSTS}" &&
     docker-compose exec -T pass chmod 0600 /home/user/.ssh/known_hosts &&
     docker-compose exec -T pass git fetch origin master &&
     docker-compose exec -T pass git rebase origin/master &&

@@ -23,6 +23,9 @@ services:
     build: images/experiment
     environment:
       - PROJECT_NAME="pass"
+      - ID_RSA
+      - ID_RSA_PUB
+      - KNOWN_HOSTS
   chromium:
     image: sassmann/debian-chromium
     volumes:
