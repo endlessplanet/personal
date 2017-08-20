@@ -9,9 +9,9 @@ docker-compose build &&
     docker-compose ps &&
     docker-compose logs pass &&
     
-    echo PASS 1 &&
+    echo PASS 100 &&
     docker-compose exec -T pass sh /opt/docker/write_it.sh /home/user/secret1.key "${GPG_SECRET_KEY}" &&
-    echo PASS 2 &&
+    echo PASS 200 &&
     docker-compose exec -T pass sh /opt/docker/write_it.sh /home/user/owner1.trust "${GPG_OWNER_TRUST}" &&
     docker-compose exec -T pass gpg --batch --import /home/user/secret1.key &&
     docker-compose exec -T pass gpg --batch --import-ownertrust /home/user/owner1.trust &&
@@ -21,6 +21,7 @@ docker-compose build &&
     docker-compose exec -T pass git config user.email "${EMAIL}" &&
     docker-compose exec -T pass git remote add origin git@github.com:desertedscorpion/passwordstore.git &&
     docker-compose exec -T pass mkdir /home/user/.ssh &&
+    echo PASS 5200 &&
     docker-compose exec -T pass chmod 0700 /home/user/.ssh &&
     docker-compose exec -T pass sh /opt/docker/write_it.sh /home/user/.ssh/id_rsa "${ID_RSA}" &&
     docker-compose exec -T pass chmod 0600 /home/user/.ssh/id_rsa &&
