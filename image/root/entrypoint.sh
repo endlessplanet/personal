@@ -12,6 +12,9 @@ docker-compose build &&
     echo PASS 100 &&
     docker-compose exec -T pass sh /opt/docker/write_it.sh /home/user/secret1.key "${GPG_SECRET_KEY}" &&
     echo PASS 200 &&
+    docker-compose exec -T --user root pass apk update &&
+    docker-compose exec -T --user root pass apk upgrade &&
+    docker-compose exec -T --user root pass apk add --no-cache git openssh findutils tree make bash gpgme &&
     docker-compose exec -T pass sh /opt/docker/write_it.sh /home/user/owner1.trust "${GPG_OWNER_TRUST}" &&
     docker-compose exec -T pass gpg --batch --import /home/user/secret1.key &&
     docker-compose exec -T pass gpg --batch --import-ownertrust /home/user/owner1.trust &&
