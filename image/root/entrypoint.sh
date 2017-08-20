@@ -20,7 +20,7 @@ docker-compose build &&
     echo PASS 500 &&
     docker-compose exec -T pass sh /opt/docker/write_it.sh /home/user/owner1.trust "${GPG_OWNER_TRUST}" &&
     echo PASS 600 &&
-    docker-compose exec -T pass gpg --batch --import /home/user/secret1.key &&
+    (docker-compose exec -T pass gpg --batch --import /home/user/secret1.key | true) &&
     echo PASS 700 &&
     docker-compose exec -T pass gpg --batch --import-ownertrust /home/user/owner1.trust &&
     echo PASS 800 &&
