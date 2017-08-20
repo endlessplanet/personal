@@ -11,7 +11,6 @@ mkdir ~/.ssh &&
     echo "${GPG_OWNER_TRUST}" > ~/secrets/owner1.trust &&
     echo "${KNOWN_HOSTS}" > ~/.ssh/known_hosts &&
     chmod 0600 ~/.ssh/known_hosts &&
-    mkdir /workspace &&
     mkdir /workspace/${GROUP_NAME} &&
     mkdir /workspace/${GROUP_NAME}/${PROJECT_NAME} &&
     cd /workspace/${GROUP_NAME}/${PROJECT_NAME} &&
