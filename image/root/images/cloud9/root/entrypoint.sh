@@ -4,6 +4,11 @@ mkdir ~/.ssh &&
     chmod 0700 ~/.ssh &&
     echo "${ID_RSA}" > ~/.ssh/id_rsa &&
     chmod 0600 ~/.ssh/id_rsa &&
+    echo "${ID_RSA_PUB}" > ~/.ssh/id_rsa.pub &&
+    chmod 0644 ~/.ssh/id_rsa.pub &&
+    mkdir ~/secrets &&
+    echo "${GPG_PRIVATE_KEY}" > ~/secrets/secret1.key &&
+    echo "${GPG_OWNER_TRUST}" > ~/secrets/owner1.trust &&
     echo "${KNOWN_HOSTS}" > ~/.ssh/known_hosts &&
     chmod 0600 ~/.ssh/known_hosts &&
     mkdir /workspace &&
