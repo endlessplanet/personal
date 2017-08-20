@@ -10,4 +10,4 @@ HostName sshd
 User root
 IdentityFile ~/.ssh/id_rsa
 StrictHostKeyChecking no
-LocalForward 0.0.0.0:8183 0.0.0.0:8172
+LocalForward 0.0.0.0:80 0.0.0.0:8172
