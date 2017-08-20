@@ -22,4 +22,4 @@ mkdir ~/.ssh &&
     git remote add origin git@github.com:${GROUP_NAME}/${PROJECT_NAME}.git &&
     git fetch origin ${BRANCH} &&
     git checkout origin/${BRANCH} &&
-    forever /root/.c9/server.js -w /workspace/${GROUP_NAME}/${PROJECT_NAME} --listen 127.0.0.1
+    forever ~/.c9/server.js -w /workspace/${GROUP_NAME}/${PROJECT_NAME} --listen 127.0.0.1
