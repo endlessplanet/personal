@@ -10,8 +10,8 @@ docker-compose build &&
     docker-compose logs pass &&
     
     echo PASS &&
-    echo "${GPG_PRIVATE_KEY}" docker-compose exec -T pass tee ~/secret1.key &&
-    echo "${GPG_OWNER_TRUST}" docker-compose exec -T pass tee ~/owner1.trust &&
+    echo "${GPG_PRIVATE_KEY}" | docker-compose exec -T pass tee ~/secret1.key &&
+    echo "${GPG_OWNER_TRUST}" | docker-compose exec -T pass tee ~/owner1.trust &&
     docker-compose exec -T pass gpg --batch --import ~/secret1.key &&
     docker-compose exec -T pass gpg --batch --import-ownertrust ~/owner1.trust &&
     docker-compose exec pass init ${GPG_KEY_ID} &&
@@ -21,7 +21,7 @@ docker-compose build &&
     docker-compose exec -T pass git remote add origin git@github.com:desertedscorpion/passwordstore.git &&
     docker-compose exec -T pass mkdir ~/.ssh &&
     docker-compose exec -T pass chmod 0700 ~/.ssh &&
-    echo "${ID_RSA}" docker-compose exec -T pass | tee ~/.ssh/id_rsa &&
+    echo "${ID_RSA}" | docker-compose exec -T pass | tee ~/.ssh/id_rsa &&
     docker-compose exec -T pass chmod 0600 ~/.ssh/id_rsa &&
     echo "${KNOWN_HOSTS}" | docker-compose exec -T pass ~/.ssh/known_hosts &&
     docker-compose exec -T pass chmod 0600 ~/.ssh/known_hosts &&
