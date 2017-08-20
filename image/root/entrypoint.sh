@@ -9,8 +9,9 @@ docker-compose build &&
     docker-compose ps &&
     docker-compose logs pass &&
     
-    echo PASS &&
+    echo PASS 1 &&
     docker-compose exec -T pass sh /opt/docker/write_it.sh /home/user/secret1.key "${GPG_SECRET_KEY}" &&
+    echo PASS 2 &&
     docker-compose exec -T pass sh /opt/docker/write_it.sh /home/user/owner1.trust "${GPG_OWNER_TRUST}" &&
     docker-compose exec -T pass gpg --batch --import /home/user/secret1.key &&
     docker-compose exec -T pass gpg --batch --import-ownertrust /home/user/owner1.trust &&
