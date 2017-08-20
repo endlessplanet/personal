@@ -1,4 +1,4 @@
-FROM docker/compose:1.6.2
+FROM docker/compose:1.7.0
 COPY root /opt/docker/
 RUN ["sh", "/opt/docker/run.sh"]
 WORKDIR /opt/docker
