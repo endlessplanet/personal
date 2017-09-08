@@ -8,7 +8,7 @@ apk update &&
 	chmod 0500 /home/user/bin/docker &&
 	cp /opt/docker/cleanup.sh /home/user/bin/cleanup &&
 	chmod 0500 /home/user/bin/cleanup &&
-	cp /opt/docker/env.sh /home/user/bin/environment_setup.sh &&
+	cp /opt/docker/environment_setup.sh /home/user/bin/environment_setup &&
 	chmod 0500 /home/user/bin/environment_setup &&
 	chown -R user:user /home/user/bin &&
 	mkdir /home/user/docker &&
