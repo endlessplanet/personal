@@ -3,13 +3,13 @@
 apk update &&
 	apk upgrade &&
 	adduser -D user &&
-	echo PATH=/home/user/bin:\${PATH} > /home/user/.profile &&
-	chown user:user /home/user/.profile &&
 	mkdir /home/user/bin &&
 	cp /opt/docker/docker.sh /home/user/bin/docker &&
 	chmod 0500 /home/user/bin/docker &&
 	cp /opt/docker/cleanup.sh /home/user/bin/cleanup &&
 	chmod 0500 /home/user/bin/cleanup &&
+	cp /opt/docker/env.sh /home/user/bin/environment_setup.sh &&
+	chmod 0500 /home/user/bin/environment_setup &&
 	chown -R user:user /home/user/bin &&
 	mkdir /home/user/docker &&
 	mkdir /home/user/docker/containers &&

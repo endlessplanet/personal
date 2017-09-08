@@ -1,6 +1,7 @@
 #!/bin/sh
 
-trap cleanup EXIT &&
+source /home/user/bin/environment_setup &&
+	trap cleanup EXIT &&
 	docker \
 		container \
 		create \
