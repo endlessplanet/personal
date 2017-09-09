@@ -35,6 +35,8 @@ source /home/user/bin/environment_setup &&
 	docker \
 		container \
 		create \
+		--env GITLAB_ROOT_PASSWORD=password \
+		--env GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN=62c33057-58a9-472d-9949-85ef99f74f8f \
 		--cidfile ${HOME}/docker/containers/gitlab \
 		gitlab/gitlab-ce:latest &&
 	docker network connect --alias gitlab $(cat ${HOME}/docker/networks/default) $(cat ${HOME}/docker/containers/gitlab) &&
@@ -43,7 +45,7 @@ source /home/user/bin/environment_setup &&
 		create \
 		--cidfile ${HOME}/docker/containers/gitlab-runner \
 		gitlab/gitlab-runner:latest	 &&
-	docker network connect entrypoint_default $(cat ${HOME}/docker/containers/gitlab-runner) &&
+	docker network connect $(cat ${HOME}/docker/networks/default) $(cat ${HOME}/docker/containers/gitlab-runner) &&
 	docker container start $(cat ${HOME}/docker/containers/chromium) &&
 	docker container start $(cat ${HOME}/docker/containers/sshd) &&
 	docker container start $(cat ${HOME}/docker/containers/gitlab) &&
@@ -53,6 +55,20 @@ source /home/user/bin/environment_setup &&
 			sleep 1s
 	done &&
 	docker container start $(cat ${HOME}/docker/containers/gitlab-runner) &&
+	docker \
+		container \
+		exec \
+		--interactive \
+		--tty \
+		$(cat ${HOME}/docker/containers/gitlab-runner) \
+		gitlab-runner register \
+			--non-interactive \
+			--url http://gitlab/ci \
+			--registration-token 62c33057-58a9-472d-9949-85ef99f74f8f \
+			--limit 1 \
+			--name "default" \
+			--executor docker \
+			--docker-image docker:latest &&
 	bash
 
 
