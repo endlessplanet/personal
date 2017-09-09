@@ -5,6 +5,7 @@ docker \
 	--interactive \
 	--tty \
 	--rm \
+	--env DISPLAY \
 	--env PROJECT_NAME \
 	--env ID_RSA="$(cat ~/.ssh/id_rsa)" \
 	--env KNOWN_HOSTS="$(cat ~/.ssh/known_hosts)" \

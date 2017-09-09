@@ -23,6 +23,8 @@ source /home/user/bin/environment_setup &&
 		--env ORIGIN="${ORIGIN}" \
 		--env UPSTREAM="${UPSTREAM}" \
 		--env REPORT="${REPORT}" \
+		--env DISPLAY="${DISPLAY}" \
+		--volume /tmp/.X11-unix:/tmp/.X11-unix:ro \
 		endlessplanet/shell &&
 	docker network connect $(cat ${HOME}/docker/networks/default) $(cat ${HOME}/docker/containers/shell) &&
     docker \
