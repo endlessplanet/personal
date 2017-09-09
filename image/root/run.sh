@@ -19,4 +19,5 @@ apk update &&
 	apk add --no-cache sudo &&
 	cp /opt/docker/user.sudo /etc/sudoers.d/user &&
 	chmod 0444 /etc/sudoers.d/user &&
+	apk add --no-cache util-linux bash &&
 	rm -rf /var/cache/apk/*

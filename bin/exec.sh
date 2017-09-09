@@ -5,6 +5,13 @@ docker \
 	--interactive \
 	--tty \
 	--rm \
-	--entrypoint sh \
+	--env PROJECT_NAME \
+	--env ID_RSA="$(cat ~/.ssh/id_rsa)" \
+	--env KNOWN_HOSTS="$(cat ~/.ssh/known_hosts)" \
+	--env USERNAME="Emory Merryman" \
+	--env EMAIL="emory.merryman@gmail.com" \
+	--env ORIGIN \
+	--env UPSTREAM \
+	--env REPORT \
 	--volume /var/run/docker.sock:/var/run/docker.sock:ro \
 	endlessplanet/personal 
