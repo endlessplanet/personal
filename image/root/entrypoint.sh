@@ -1,7 +1,8 @@
 #!/bin/sh
 
-source /home/user/bin/environment_setup &&
+export PATH=/home/user/bin:${PATH} &&
 	trap cleanup EXIT &&
+	export GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN=$(uuidgen) &&
 	docker network create $(uuidgen) > ${HOME}/docker/networks/default &&
 	docker volume create > ${HOME}/docker/volumes/homey &&
 	docker \
@@ -36,7 +37,7 @@ source /home/user/bin/environment_setup &&
 		container \
 		create \
 		--env GITLAB_ROOT_PASSWORD=password \
-		--env GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN=62c33057-58a9-472d-9949-85ef99f74f8f \
+		--env GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN \
 		--cidfile ${HOME}/docker/containers/gitlab \
 		gitlab/gitlab-ce:latest &&
 	docker network connect --alias gitlab $(cat ${HOME}/docker/networks/default) $(cat ${HOME}/docker/containers/gitlab) &&
@@ -64,10 +65,11 @@ source /home/user/bin/environment_setup &&
 		gitlab-runner register \
 			--non-interactive \
 			--url http://gitlab/ci \
-			--registration-token 62c33057-58a9-472d-9949-85ef99f74f8f \
+			--registration-token ${GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN} \
 			--limit 1 \
 			--name "default" \
 			--executor docker \
+			--docker-volumes /var/run/docker.sock:/var/run/docker.sock:ro \
 			--docker-image docker:latest &&
 	bash
 
