@@ -10,6 +10,8 @@ apk update &&
 	chmod 0500 /home/user/bin/cleanup &&
 	cp /opt/docker/environment_setup.sh /home/user/bin/environment_setup &&
 	chmod 0500 /home/user/bin/environment_setup &&
+	cp /opt/docker/start-personal.sh /home/user/bin/start-personal &&
+	chmod 0500 /home/user/bin/start-personal &&
 	chown -R user:user /home/user/bin &&
 	mkdir /home/user/docker &&
 	mkdir /home/user/docker/containers &&
