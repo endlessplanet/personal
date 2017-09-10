@@ -11,3 +11,4 @@ build:
   stage: build
   script:
     - docker image build --tag endlessplanet/java image
+    - docker image push endlessplanet/java
