@@ -1,0 +1,12 @@
+stages:
+  - sanity
+  - build
+  - publish
+sanity:
+  stage: sanity
+  script:
+    - env
+build:
+  stage: build
+  script:
+    - docker image build image
