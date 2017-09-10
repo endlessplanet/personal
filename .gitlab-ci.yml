@@ -10,4 +10,4 @@ sanity:
 build:
   stage: build
   script:
-    - docker image build image
+    - docker image build --tag endlessplanet/java image
