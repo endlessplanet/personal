@@ -5,6 +5,7 @@ stages:
 sanity:
   stage: sanity
   script:
+    - echo hi
     - env
 build:
   stage: build
