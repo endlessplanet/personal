@@ -2,6 +2,8 @@ stages:
   - sanity
   - build
   - publish
+before_script:
+  - docker login --username emorymerryman --password ClMaYLTIRJw0BazbSkh70xgbXfMBhjNBMUSy80ooP7UG0Eo725GP2aFGoYjf8tDo
 sanity:
   stage: sanity
   script:
