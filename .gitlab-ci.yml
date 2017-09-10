@@ -6,7 +6,6 @@ sanity:
   stage: sanity
   script:
     - env
-    - git describe --long --tags
 build:
   stage: build
   script:
