@@ -1,0 +1,10 @@
+<project>
+    <target name="sanity">
+        <echo>hello world</echo>
+    </target>
+    <target name="compile">
+        <mkdir dir="dist"></mkdir>
+        <javac srcdir="src" destdir="dist">
+        </javac>
+    </target>
+</project>

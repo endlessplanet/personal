@@ -1,0 +1,16 @@
+image: endlessplanet/java
+stages:
+  - sanity
+  - compile
+sanity:
+  stage: sanity
+  script:
+    - echo hi
+    - ant sanity
+compile:
+  stage: compile
+  script:
+    - ant compile
+  artifacts:
+    paths:
+      - dist
