@@ -24,8 +24,9 @@ export PROJECT_NAME &&
 		--env UPSTREAM \
 		--env REPORT  \
 		--env DISPLAY \
+		--env MASTER_BRANCH=master \
 		--volume /tmp/.X11-unix:/tmp/.X11-unix:ro \
-		endlessplanet/shell:58f3412432dbff15ad68fe6ceb6b12528346c507 &&
+		endlessplanet/shell:b1412ce80f13238d569722893510f242beee2f44 &&
 	docker network connect $(cat ${HOME}/docker/networks/default) $(cat ${SHELL_CIDFILE}) &&
 	WORKPLACE_VOLUME=$(mktemp ${HOME}/docker/volumes/workplace-XXXXXXX) &&
 	rm -f ${WORKPLACE_VOLUME} &&
