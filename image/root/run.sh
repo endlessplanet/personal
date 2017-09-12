@@ -4,11 +4,9 @@ apk update &&
 	apk upgrade &&
 	adduser -D user &&
 	mkdir /home/user/bin &&
-	cp /opt/docker/docker.sh /home/user/bin/docker &&
-	chmod 0500 /home/user/bin/docker &&
-	ls -1 /opt/docker/startups | while read FILE
+	ls -1 /opt/docker/bin | while read FILE
 	do
-		cp /opt/docker/startups/${FILE} /home/user/bin/${FILE%.*} &&
+		cp /opt/docker/bin/${FILE} /home/user/bin/${FILE%.*} &&
 			chmod 0500 /home/user/bin/${FILE%.*}
 	done &&
 	chown -R user:user /home/user/bin &&
