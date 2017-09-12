@@ -26,7 +26,7 @@ export PROJECT_NAME &&
 		--env DISPLAY \
 		--volume /tmp/.X11-unix:/tmp/.X11-unix:ro \
 		endlessplanet/shell &&
-	docker network connect $(cat ${HOME}/docker/networks/default) ${SHELL_CIDFILE} &&
+	docker network connect $(cat ${HOME}/docker/networks/default) $(cat ${SHELL_CIDFILE}) &&
 	WORKPLACE_VOLUME=$(mktemp ${HOME}/docker/volumes/workplace-XXXXXXX) &&
 	rm -f ${WORKPLACE_VOLUME} &&
     docker \
