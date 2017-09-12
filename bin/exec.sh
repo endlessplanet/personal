@@ -26,4 +26,4 @@ CID_FILE=$(mktemp) &&
     	--env HOST_UID=1000 \
     	--volume /var/run/docker.sock:/var/run/docker.sock:ro \
     	endlessplanet/personal:$(git rev-parse --verify HEAD) &&
-    docker container run --interactive $(cat ${CID_FILE})
+    docker container start --interactive $(cat ${CID_FILE})
