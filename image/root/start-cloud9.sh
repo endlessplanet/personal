@@ -43,7 +43,7 @@ export PROJECT_NAME &&
 		--env SSHD_CONTAINER=$(cat ${HOME}/docker/containers/sshd) \
 		--volume /var/run/docker.sock:/var/run/docker.sock:ro \
 		--volume $(cat ${WORKPLACE_VOLUME}):/workspace \
-		endlessplanet/cloud9:f8b30f202b2a462bac80effe618871c759382853&&
+		endlessplanet/cloud9:ef76031eb6d81f47a84ea76abe43d8d3eeb9a0bf &&
 	docker network connect --alias ${PROJECT_NAME} $(cat ${HOME}/docker/networks/default) $(cat ${CLOUD9_CIDFILE}) &&
 	docker container start $(cat ${SHELL_CIDFILE}) &&
 	docker container start $(cat ${CLOUD9_CIDFILE})
