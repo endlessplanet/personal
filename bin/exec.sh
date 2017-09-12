@@ -1,6 +1,12 @@
 #!/bin/sh
 
 CID_FILE=$(mktemp) &&
+    cleanup(){
+        docker container stop $(cat ${CID_FILE}) &&
+            docker container rm $(cat ${CID_FILE}) &&
+            rm -f ${CID_FILE}
+    } &&
+    trap cleanup EXIT &&
     rm ${CID_FILE} &&
     docker \
     	container \
@@ -8,7 +14,6 @@ CID_FILE=$(mktemp) &&
     	--cidfile ${CID_FILE} \
     	--interactive \
     	--tty \
-    	--rm \
     	--env DISPLAY \
     	--env PROJECT_NAME \
     	--env ID_RSA="$(cat ~/.ssh/id_rsa)" \
@@ -21,5 +26,4 @@ CID_FILE=$(mktemp) &&
     	--env HOST_UID=1000 \
     	--volume /var/run/docker.sock:/var/run/docker.sock:ro \
     	endlessplanet/personal:$(git rev-parse --verify HEAD) &&
-    docker container run --interactive $(cat ${CID_FILE}) &&
-    rm -f ${CID_FILE} 
+    docker container run --interactive $(cat ${CID_FILE})
