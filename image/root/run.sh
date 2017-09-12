@@ -6,12 +6,11 @@ apk update &&
 	mkdir /home/user/bin &&
 	cp /opt/docker/docker.sh /home/user/bin/docker &&
 	chmod 0500 /home/user/bin/docker &&
-	cp /opt/docker/cleanup.sh /home/user/bin/cleanup &&
-	chmod 0500 /home/user/bin/cleanup &&
-	cp /opt/docker/environment_setup.sh /home/user/bin/environment_setup &&
-	chmod 0500 /home/user/bin/environment_setup &&
-	cp /opt/docker/start-personal.sh /home/user/bin/start-personal &&
-	chmod 0500 /home/user/bin/start-personal &&
+	ls -1 /opt/docker/startups/*.sh | while read FILE
+	do
+		cp /opt/docker/startups/${FILE} /home/user/bin/${FILE%.*} &&
+			chmod 0500 /home/user/bin/${FILE%.*}
+	done &&
 	chown -R user:user /home/user/bin &&
 	mkdir /home/user/docker &&
 	mkdir /home/user/docker/containers &&

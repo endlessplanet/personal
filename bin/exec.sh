@@ -14,5 +14,6 @@ docker \
 	--env ORIGIN \
 	--env UPSTREAM \
 	--env REPORT \
+	--env HOST_UID=1000 \
 	--volume /var/run/docker.sock:/var/run/docker.sock:ro \
 	endlessplanet/personal 
