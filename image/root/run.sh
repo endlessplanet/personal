@@ -6,7 +6,7 @@ apk update &&
 	mkdir /home/user/bin &&
 	cp /opt/docker/docker.sh /home/user/bin/docker &&
 	chmod 0500 /home/user/bin/docker &&
-	ls -1 /opt/docker/startups/*.sh | while read FILE
+	ls -1 /opt/docker/startups | while read FILE
 	do
 		cp /opt/docker/startups/${FILE} /home/user/bin/${FILE%.*} &&
 			chmod 0500 /home/user/bin/${FILE%.*}
