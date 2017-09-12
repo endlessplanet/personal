@@ -1,3 +1,3 @@
 #!/bin/sh
 
-sudo /usr/local/bin/docker "${@}"
+sudo -E /usr/local/bin/docker "${@}"
