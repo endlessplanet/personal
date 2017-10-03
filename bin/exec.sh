@@ -41,4 +41,4 @@ cleanup(){
     docker container start $(cat dind1.id) &&
     docker container exec $(cat dind0.id) docker swarm init &&
     docker container exec $(cat dind1.id) docker swarm join docker0:2377 &&
-    docker container start --interactive $(cat personal.id) &&
+    docker container start --interactive $(cat personal.id)
