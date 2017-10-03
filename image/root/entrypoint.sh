@@ -14,5 +14,5 @@ docker image pull sassmann/debian-chromium:latest &&
         --env DISPLAY \
         --mount type=bind,source=/var/opt/.X11-unix,destination=/tmp/.X11-unix,readonly=true \
         --network swarm-network \
-        docker.io/sassmann/debian-chromium:latest
+        docker.io/sassmann/debian-chromium:latest &&
     sh
