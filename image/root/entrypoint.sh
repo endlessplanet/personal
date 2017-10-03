@@ -10,13 +10,6 @@ docker image pull sassmann/debian-chromium:latest &&
     docker \
         service \
         create \
-        --env DISPLAY \
-        --mount type=bind,source=/var/opt/.X11-unix,destination=/tmp/.X11-unix,readonly=true \
-        --network swarm-network \
-        docker.io/sassmann/debian-chromium:latest &&
-    docker \
-        service \
-        create \
         --publish 443:443 \
         --publish 80:80 \
         --publish 22:22 \
@@ -24,4 +17,11 @@ docker image pull sassmann/debian-chromium:latest &&
         --hostname gitlab \
         --network swarm-network \
         gitlab/gitlab-ce:latest &&
+    docker \
+        service \
+        create \
+        --env DISPLAY \
+        --mount type=bind,source=/var/opt/.X11-unix,destination=/tmp/.X11-unix,readonly=true \
+        --network swarm-network \
+        docker.io/sassmann/debian-chromium:latest &&
     sh
