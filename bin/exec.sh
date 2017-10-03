@@ -3,11 +3,12 @@
 cleanup(){
     docker container stop $(cat manager.id) $(cat worker-01.id) $(cat personal.id) &&
         docker rm --volumes $(cat manager.id) $(cat worker-01.id) $(cat personal.id) &&
-        docker network rm $(cat network.id) &&
-        rm --force manager.id worker-01.id personal.id network.id
+        docker network rm $(cat network.id) $(cat overlay.id) &&
+        rm --force manager.id worker-01.id personal.id network.id overlay.id
 }
     trap cleanup EXIT &&
-    docker network create $(uuidgen) > network.id &&
+    docker network create --driver overlay $(uuidgen) > network.id &&
+    docker network create --driver overlay $(uuidgen) > overlay.id &&
     docker \
         container \
         create \
