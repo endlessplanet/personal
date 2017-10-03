@@ -1,18 +1,15 @@
 #!/bin/sh
 
-CIDFILE=$(mktemp) &&
-    cleanup(){
-        docker container stop ${CIDFILE} &&
-            docker container rm --volumes ${CIDFILE} &&
-            rm -f ${CIDFILE}
-    }
-    rm -f ${CIDFILE} &&
+cleanup(){
+    docker container stop emacs &&
+        docker container rm --volumes emacs
+}
     docker \
         container \
         create \
-        --cidfile ${CIDFILE} \
+        --name emacs \
         --env DISPLAY \
         --volume /var/opt/.X11-unix:/tmp/.X11-unix:ro \
         --volume home:/home \
         silex/emacs &&
-    docker container start $(cat ${CIDFILE})
+    docker container start emacs
