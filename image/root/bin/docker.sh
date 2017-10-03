@@ -16,4 +16,9 @@ CIDFILE=$(mktemp) &&
         --volume /var/run/docker.sock:/var/run/docker.sock:ro \
         docker:17.09.0-ce \
             "${@}" &&
-    tee | /usr/bin/docker start --interactive $(cat ${CIDFILE})
+    if [ -t 0 ]
+    then
+        tee | /usr/bin/docker start --interactive $(cat ${CIDFILE})
+    else
+        /usr/bin/docker start --interactive $(cat ${CIDFILE})
+    fi
