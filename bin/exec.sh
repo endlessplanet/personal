@@ -7,7 +7,7 @@ cleanup(){
         rm --force manager.id worker-01.id personal.id network.id overlay.id
 }
     trap cleanup EXIT &&
-    docker network create --driver overlay $(uuidgen) > network.id &&
+    docker network create --driver $(uuidgen) > network.id &&
     docker network create --driver overlay $(uuidgen) > overlay.id &&
     docker \
         container \
@@ -15,6 +15,7 @@ cleanup(){
         --cidfile manager.id \
         --privileged \
         --volume /tmp/.X11-unix:/var/opt/.X11-unix:ro \
+        --network $(cat overlay.id) \
         docker:17.09.0-ce-dind \
             --host tcp://0.0.0.0:2376 &&
     docker \
@@ -23,6 +24,7 @@ cleanup(){
         --cidfile worker-01.id \
         --privileged \
         --volume /tmp/.X11-unix:/var/opt/.X11-unix:ro \
+        --network $(cat overlay.id) \
         docker:17.09.0-ce-dind \
             --host tcp://0.0.0.0:2376 &&
     docker \
