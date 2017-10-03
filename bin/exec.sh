@@ -15,7 +15,6 @@ cleanup(){
         --cidfile personal.id \
         --interactive \
         --tty \
-        --entrypoint sh \
         --env DOCKER_HOST=tcp://docker:2376 \
         --volume /var/run/docker.sock:/var/run/docker.sock:ro \
         endlessplanet/personal:$(git rev-parse --verify HEAD) &&
