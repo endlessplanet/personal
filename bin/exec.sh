@@ -31,7 +31,7 @@ cleanup(){
         --interactive \
         --tty \
         --env DISPLAY \
-        --env DOCKER_HOST=tcp://docker0:2376 \
+        --env DOCKER_HOST=tcp://docker1:2376 \
         --volume /var/run/docker.sock:/var/run/docker.sock:ro \
         endlessplanet/personal:$(git rev-parse --verify HEAD) &&
     docker network connect --alias docker0 $(cat network.id) $(cat dind0.id) &&
@@ -39,6 +39,6 @@ cleanup(){
     docker network connect $(cat network.id) $(cat personal.id)
     docker container start $(cat dind0.id) $(cat dind1.id) &&
     docker container exec --interactive --tty $(cat dind0.id) docker swarm init --advertise-addr docker0 &&
-    JOIN_TOKEN=$(docker container exec --interactive --tty $(cat dind0.id) docker swarm join-token --quiet manager | tr -cd "[:print:]") &&
+    JOIN_TOKEN=$(docker container exec --interactive --tty $(cat dind0.id) docker swarm join-token --quiet worker | tr -cd "[:print:]") &&
     docker container exec --interactive --tty $(cat dind1.id) docker swarm join --token "${JOIN_TOKEN}" docker0:2377 &&
     docker container start --interactive $(cat personal.id)
