@@ -1,4 +1,4 @@
 #!/bin/sh
 
-docker volume create home &&
+# docker volume create home &&
     sh
