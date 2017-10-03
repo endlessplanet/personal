@@ -1,11 +1,10 @@
 #!/bin/sh
 
 CIDFILE=$(mktemp) &&
-    INPUT=$(mktemp) &&
     cleanup(){
         /usr/bin/docker stop $(cat ${CIDFILE}) &&
             docker rm --volumes $(cat ${CIDFILE}) &&
-            rm -f ${CIDFILE} ${INPUT}
+            rm -f ${CIDFILE}
     } &&
     rm ${CIDFILE} &&
     /usr/bin/docker \
@@ -18,7 +17,9 @@ CIDFILE=$(mktemp) &&
             "${@}" &&
     if [ -t 0 ]
     then
+        echo ALPHA &&
         tee | /usr/bin/docker start --interactive $(cat ${CIDFILE})
     else
+        echo BETA &&
         /usr/bin/docker start --interactive $(cat ${CIDFILE})
     fi
