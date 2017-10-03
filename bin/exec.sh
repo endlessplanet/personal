@@ -7,7 +7,7 @@ cleanup(){
         rm --force manager.id worker-01.id personal.id network.id overlay.id
 }
     trap cleanup EXIT &&
-    docker network create --driver $(uuidgen) > network.id &&
+    docker network create $(uuidgen) > network.id &&
     docker network create --driver overlay $(uuidgen) > overlay.id &&
     docker \
         container \
