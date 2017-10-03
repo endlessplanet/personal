@@ -39,6 +39,8 @@ cleanup(){
     docker network connect $(cat network.id) $(cat personal.id)
     docker container start $(cat dind0.id) &&
     docker container start $(cat dind1.id) &&
-    docker container exec $(cat dind0.id) docker swarm init &&
-    docker container exec $(cat dind1.id) docker swarm join docker0:2377 &&
+    docker container exec --interactive --tty $(cat dind0.id) docker swarm init --advertise-addr docker0 &&
+    JOIN_TOKEN=$(docker container exec --interactive --tty $(cat dind0.id) docker swarm join-token --quiet worker | tr -cd "[:print:]") &&
+    docker container exec --interactive --tty $(cat dind1.id) sh &&
+    docker container exec --interactive --tty $(cat dind1.id) docker swarm join --token "${JOIN_TOKEN}" docker0:2377 &&
     docker container start --interactive $(cat personal.id)
