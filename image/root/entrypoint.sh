@@ -1,3 +1,3 @@
 #!/bin/sh
 
-sh
+docker volume create home
