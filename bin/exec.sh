@@ -8,13 +8,21 @@ cleanup(){
 }
     trap cleanup EXIT &&
     docker network create $(uuidgen) > network.id &&
-    docker container create --cidfile dind.id --privileged docker:17.09.0-ce-dind --host tcp://0.0.0.0:2376 &&
+    docker \
+        container \
+        create \
+        --cidfile dind.id \
+        --privileged \
+        --volume /tmp/.X11-unix:/tmp/.X11-unix:ro \
+        docker:17.09.0-ce-dind \
+            --host tcp://0.0.0.0:2376 &&
     docker \
         container \
         create \
         --cidfile personal.id \
         --interactive \
         --tty \
+        --env DISPLAY \
         --env DOCKER_HOST=tcp://docker:2376 \
         --volume /var/run/docker.sock:/var/run/docker.sock:ro \
         endlessplanet/personal:$(git rev-parse --verify HEAD) &&
