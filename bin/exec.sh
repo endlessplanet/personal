@@ -7,7 +7,7 @@ cleanup(){
         rm --force manager.id worker-00.id worker-01.id personal.id network.id overlay.id
 }
     trap cleanup EXIT &&
-    docker network create $(uuidgen) > network.id &&
+    docker network create $(uuidgen) --subnet 10.0.0.0/24 > network.id &&
     docker network create --driver overlay $(uuidgen) > overlay.id &&
     docker \
         container \
@@ -43,12 +43,12 @@ cleanup(){
         --env DOCKER_HOST=tcp://manager:2376 \
         --volume /var/run/docker.sock:/var/run/docker.sock:ro \
         endlessplanet/personal:$(git rev-parse --verify HEAD) &&
-    docker network connect --alias manager $(cat network.id) $(cat manager.id) &&
+    docker network connect --alias manager --ip 10.0.0.200 $(cat network.id) $(cat manager.id) &&
     docker network connect --alias worker-00 $(cat network.id) $(cat worker-00.id) &&
     docker network connect --alias worker-01 $(cat network.id) $(cat worker-01.id) &&
     docker network connect $(cat network.id) $(cat personal.id)
     docker container start $(cat manager.id) $(cat worker-00.id) $(cat worker-01.id) &&
-    docker container exec --interactive --tty $(cat manager.id) docker swarm init --advertise-addr manager &&
+    docker container exec --interactive --tty $(cat manager.id) docker swarm init --advertise-addr 10.0.0.200 &&
     JOIN_TOKEN=$(docker container exec --interactive --tty $(cat manager.id) docker swarm join-token --quiet worker | tr -cd "[:print:]") &&
     docker container exec --interactive --tty $(cat worker-00.id) docker swarm join --token "${JOIN_TOKEN}" manager:2377 &&
     docker container exec --interactive --tty $(cat worker-01.id) docker swarm join --token "${JOIN_TOKEN}" manager:2377 &&
