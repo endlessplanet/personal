@@ -20,7 +20,6 @@ docker image pull sassmann/debian-chromium:latest &&
         --publish 443:443 \
         --publish 80:80 \
         --publish 22:22 \
-        --network host \
         --name gitlab \
         --hostname gitlab \
         --network swarm-network \
