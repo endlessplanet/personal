@@ -13,7 +13,7 @@ cleanup(){
         create \
         --cidfile dind.id \
         --privileged \
-        --volume /tmp/.X11-unix:/tmp/.X11-unix:ro \
+        --volume /tmp/.X11-unix:/var/opt/.X11-unix:ro \
         docker:17.09.0-ce-dind \
             --host tcp://0.0.0.0:2376 &&
     docker \
