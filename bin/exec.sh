@@ -12,7 +12,7 @@ cleanup(){
     docker \
         container \
         create \
-        --cidfile container.id \
+        --cidfile personal.id \
         --interactive \
         --tty \
         --entrypoint sh \
@@ -20,6 +20,6 @@ cleanup(){
         --volume /var/run/docker.sock:/var/run/docker.sock:ro \
         endlessplanet/personal:$(git rev-parse --verify HEAD) &&
     docker network connect --alias docker $(cat network.id) $(cat dind.id) &&
-    docker network connect $(cat network.id) $(cat dind.id)
+    docker network connect $(cat network.id) $(cat personal.id)
     docker container start $(cat dind.id) &&
-    docker container start --interactive $(cat container.id)
+    docker container start --interactive $(cat personal.id)
