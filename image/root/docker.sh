@@ -7,5 +7,5 @@ CIDFILE=$(mktemp) &&
             rm ${CIDFILE}
     } &&
     rm ${CIDFILE} &&
-    /usr/bin/docker create --cid ${CIDFILE} --interactive --tty docker:17.09.0-ce "${@}" &&
+    /usr/bin/docker create --cidfile ${CIDFILE} --interactive --tty docker:17.09.0-ce "${@}" &&
     /usr/bin/docker start --interactive $(cat ${CIDFILE})
