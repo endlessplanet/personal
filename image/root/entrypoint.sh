@@ -9,7 +9,7 @@ WORKDIR=$(mktemp -d) &&
         service \
         create \
         --detach=true \
-        --host-name gitlab \
+        --hostname gitlab \
         --name gitlab \
         gitlab/gitlab-ce:latest &&
     docker \
