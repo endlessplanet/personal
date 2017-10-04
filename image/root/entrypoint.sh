@@ -24,6 +24,6 @@ docker image pull sassmann/debian-chromium:latest &&
         --name gitlab \
         --hostname gitlab \
         gitlab/gitlab-ce:latest &&
-    docker service update gitlab --add-network swarm-network &&
-    docker service update chromium --add-network swarm-network &&
+    docker service update gitlab --network-add swarm-network &&
+    docker service update chromium --network-add swarm-network &&
     sh
