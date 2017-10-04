@@ -3,7 +3,7 @@
 docker image pull sassmann/debian-chromium:latest &&
     docker image pull gitlab/gitlab-ce:10.0.2-ce.0 &&
     # docker image pull gitlab/gitlab-runner:v10.0.1 &&
-    docker network create --driver overlay swarm-network &&
+    docker network create --driver overlay --subnet 10.0.3.0/24 swarm-network &&
     docker volume create homey &&
     docker volume create workspace &&
     # --device /dev/dri/card0 -v /run/user/$UID/pulse/native:/tmp/pulse -v /dev/shm:/home/user/Download \
