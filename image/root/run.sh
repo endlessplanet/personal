@@ -2,6 +2,6 @@
 
 apk update &&
     apk upgrade &&
-    apk add --no-cache docker &&
+    apk add --no-cache bash &&
     adduser -D user &&
     rm -rf /var/cache/apk/*
