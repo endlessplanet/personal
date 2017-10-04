@@ -53,6 +53,7 @@ cleanup(){
     docker network connect --ip 10.0.1.201 $(cat data.id) $(cat worker-01.id) &&
     docker network connect --ip 10.0.0.51 $(cat advertise.id) $(cat personal.id) &&
     docker network connect --ip 10.0.1.51 $(cat data.id) $(cat personal.id) &&
+    docker network connect --ip 10.0.2.51 $(cat ctrl.id) $(cat personal.id) &&
     docker container start $(cat manager.id) $(cat worker-00.id) $(cat worker-01.id) &&
     docker container exec --interactive --tty $(cat manager.id) docker swarm init --advertise-addr 10.0.0.200 --data-path-addr 10.0.1.200 &&
     JOIN_TOKEN=$(docker container exec --interactive --tty $(cat manager.id) docker swarm join-token --quiet manager | tr -cd "[:print:]") &&
