@@ -12,7 +12,8 @@ docker image pull sassmann/debian-chromium:latest &&
         create \
         --env DISPLAY \
         --mount type=bind,source=/var/opt/.X11-unix,destination=/tmp/.X11-unix,readonly=true \
-        --network swarm-network \
+        --name chromium \
+        --hostname chromium \
         docker.io/sassmann/debian-chromium:latest &&
     docker \
         service \
@@ -22,6 +23,7 @@ docker image pull sassmann/debian-chromium:latest &&
         --publish 22:22 \
         --name gitlab \
         --hostname gitlab \
-        --network swarm-network \
         gitlab/gitlab-ce:latest &&
+    docker service update gitlab --add-network swarm-network &&
+    docker service update chromium --add-network swarm-network &&
     sh
