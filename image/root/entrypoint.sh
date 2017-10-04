@@ -26,6 +26,7 @@ cleanup() {
             sleep 10s
     done &&
     echo gitlab has started &&
+    docker container cp /opt/docker/gitlab.rb gitlab.1.$(docker service ps gitlab --no-trunc --format {{.ID}}):/etc/gitlab/gitlab.rb &&
     docker container exec --interactive --tty gitlab.1.$(docker service ps gitlab --no-trunc --format {{.ID}}) mkdir /etc/gitlab/ssl &&
     docker container exec --interactive --tty gitlab.1.$(docker service ps gitlab --no-trunc --format {{.ID}}) chmod 0664 /etc/gitlab/ssl &&
     docker container cp gitlab.crt gitlab.1.$(docker service ps gitlab --no-trunc --format {{.ID}}):/etc/gitlab/ssl/gitlab.crt &&
