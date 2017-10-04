@@ -15,6 +15,7 @@ cleanup(){
         create \
         --cidfile manager.id \
         --privileged \
+        --publish 80:80 \
         --volume /tmp/.X11-unix:/var/opt/.X11-unix:ro \
         docker:17.09.0-ce-dind \
             --host tcp://0.0.0.0:2376 &&
@@ -23,6 +24,7 @@ cleanup(){
         create \
         --cidfile worker-00.id \
         --privileged \
+        --publish 80:80 \
         --volume /tmp/.X11-unix:/var/opt/.X11-unix:ro \
         docker:17.09.0-ce-dind \
             --host tcp://0.0.0.0:2376 &&
@@ -31,6 +33,7 @@ cleanup(){
         create \
         --cidfile worker-01.id \
         --privileged \
+        --publish 80:80 \
         --volume /tmp/.X11-unix:/var/opt/.X11-unix:ro \
         docker:17.09.0-ce-dind \
             --host tcp://0.0.0.0:2376 &&
