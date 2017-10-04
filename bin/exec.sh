@@ -26,8 +26,8 @@ cleanup(){
         --env DOCKER_HOST=tcp://manager:2376 \
         --volume /var/run/docker.sock:/var/run/docker.sock:ro \
         endlessplanet/personal:$(git rev-parse --verify HEAD) &&
-    docker network connect --alias manager $(cat ctrl.id) $(cat manager.id) &&
+    docker network connect --alias manager --ip 10.0.2.200 $(cat ctrl.id) $(cat manager.id) &&
     docker network connect $(cat ctrl.id) $(cat personal.id) &&
-    docker container start $(cat manager.id) $(cat worker-00.id) $(cat worker-01.id) &&
-    docker container exec --interactive --tty $(cat manager.id) docker swarm init &&
+    docker container start $(cat manager.id) &&
+    docker container exec --interactive --tty $(cat manager.id) docker swarm init --advertise-addr 10.0.2.200 &&
     docker container start --interactive $(cat personal.id)
