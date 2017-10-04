@@ -1,23 +1,23 @@
 #!/bin/sh
 
 cleanup() {
-    true
+    bash
 } &&
     trap cleanup EXIT &&
-    docker network create swarm-network &&
+    docker network create --driver overlay --subnet 10.0.3.0/24 test &&
     docker \
         service \
         create \
         --hostname gitlab \
         --name gitlab \
-        --network swarm-network \
+        --network test \
         gitlab/gitlab-ce:latest &&
     docker \
         service \
         create \
         --env DISPLAY \
         --mount type=bind,source=/var/opt/.X11-unix,destination=/tmp/.X11-unix,readonly=true \
-        --network swarm-network \
+        --network test \
         sassmann/debian-chromium:latest &&
     while [[ ! "$(docker service ps gitlab --format {{.CurrentState}})" =~ "Running" ]]
     do
