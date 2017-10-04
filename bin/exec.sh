@@ -46,7 +46,7 @@ cleanup(){
     docker network connect --ip 10.0.0.200 $(cat advertise.id) $(cat manager.id) &&
     docker network connect --ip 10.0.1.200 $(cat data.id) $(cat manager.id) &&
     docker network connect --ip 10.0.0.100 $(cat advertise.id) $(cat worker-00.id) &&
-    docker network connect --ip 10.0.1.200 $(cat data.id) $(cat worker-00.id) &&
+    docker network connect --ip 10.0.1.100 $(cat data.id) $(cat worker-00.id) &&
     docker network connect --ip 10.0.0.101 $(cat advertise.id) $(cat worker-01.id) &&
     docker network connect --ip 10.0.1.201 $(cat data.id) $(cat worker-01.id) &&
     docker network connect --ip 10.0.0.51 $(cat advertise.id) $(cat personal.id) &&
