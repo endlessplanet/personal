@@ -55,5 +55,5 @@ cleanup(){
     docker container exec --interactive --tty $(cat manager.id) docker swarm init --advertise-addr 10.0.0.200 --data-path-addr 10.0.1.200 &&
     JOIN_TOKEN=$(docker container exec --interactive --tty $(cat manager.id) docker swarm join-token --quiet manager | tr -cd "[:print:]") &&
     docker container exec --interactive --tty $(cat worker-00.id) docker swarm join --token "${JOIN_TOKEN}" --advertise-addr 10.0.0.100 --data-path-addr 10.0.1.100 10.0.0.200:2377 &&
-    docker container exec --interactive --tty $(cat worker-01.id) docker swarm join --token "${JOIN_TOKEN}" --advertise-addr 10.0.0.101 --data-path-addr 10.0.1.100 10.0.0.201:2377 10.0.0.200:2377 &&
+    docker container exec --interactive --tty $(cat worker-01.id) docker swarm join --token "${JOIN_TOKEN}" --advertise-addr 10.0.0.101 --data-path-addr 10.0.1.100 10.0.0.200:2377 &&
     docker container start --interactive $(cat personal.id)
