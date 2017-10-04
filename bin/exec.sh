@@ -43,16 +43,17 @@ cleanup(){
         --env DOCKER_HOST=tcp://manager:2376 \
         --volume /var/run/docker.sock:/var/run/docker.sock:ro \
         endlessplanet/personal:$(git rev-parse --verify HEAD) &&
-    docker network connect --alias manager --ip 10.0.0.200 $(cat advertise.id) $(cat manager.id) &&
+    docker network connect --ip 10.0.0.200 $(cat advertise.id) $(cat manager.id) &&
     docker network connect --ip 10.0.1.200 $(cat data.id) $(cat manager.id) &&
-    docker network connect $(cat advertise.id) $(cat worker-00.id) &&
-    docker network connect $(cat data.id) $(cat worker-00.id) &&
-    docker network connect $(cat advertise.id) $(cat worker-01.id) &&
-    docker network connect $(cat data.id) $(cat worker-01.id) &&
-    docker network connect $(cat advertise.id) $(cat personal.id) &&
+    docker network connect --ip 10.0.0.100 $(cat advertise.id) $(cat worker-00.id) &&
+    docker network connect --ip 10.0.1.200 $(cat data.id) $(cat worker-00.id) &&
+    docker network connect --ip 10.0.0.101 $(cat advertise.id) $(cat worker-01.id) &&
+    docker network connect --ip 10.0.1.201 $(cat data.id) $(cat worker-01.id) &&
+    docker network connect --ip 10.0.0.51 $(cat advertise.id) $(cat personal.id) &&
+    docker network connect --ip 10.0.1.51 $(cat data.id) $(cat personal.id) &&
     docker container start $(cat manager.id) $(cat worker-00.id) $(cat worker-01.id) &&
     docker container exec --interactive --tty $(cat manager.id) docker swarm init --advertise-addr 10.0.0.200 --data-path-addr 10.0.1.200 &&
     JOIN_TOKEN=$(docker container exec --interactive --tty $(cat manager.id) docker swarm join-token --quiet manager | tr -cd "[:print:]") &&
-    docker container exec --interactive --tty $(cat worker-00.id) docker swarm join --token "${JOIN_TOKEN}" manager:2377 &&
-    docker container exec --interactive --tty $(cat worker-01.id) docker swarm join --token "${JOIN_TOKEN}" manager:2377 &&
+    docker container exec --interactive --tty $(cat worker-00.id) docker swarm join --token "${JOIN_TOKEN}" --advertise-addr 10.0.0.100 --data-path-addr 10.0.1.100 10.0.0.200:2377 &&
+    docker container exec --interactive --tty $(cat worker-01.id) docker swarm join --token "${JOIN_TOKEN}" --advertise-addr 10.0.0.101 --data-path-addr 10.0.1.100 10.0.0.201:2377 10.0.0.200:2377 &&
     docker container start --interactive $(cat personal.id)
