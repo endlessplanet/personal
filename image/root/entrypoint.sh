@@ -12,6 +12,7 @@ cleanup() {
         --hostname gitlab \
         --name gitlab \
         --network test \
+        --mount type=volume,source=gitlab-config,destination=/etc/gitlab,readonly=true \
         gitlab/gitlab-ce:latest &&
     docker \
         service \
