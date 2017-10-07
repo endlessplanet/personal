@@ -4,6 +4,7 @@
     <xsl:template match="/docker">
         <exsl:document href="/home/user/dockerfiles/build-images.sh" method="text">
             <xsl:apply-templates select="login|image"></xsl:apply-templates>
+            <xsl:text>true</xsl:text>
         </exsl:document>
     </xsl:template>
     <xsl:template match="image">
@@ -16,7 +17,9 @@
     </xsl:template>
     <xsl:template match="build">
         <xsl:variable name="uuid" select="generate-id(.)"/>
-        <xsl:text>docker image build --quiet --file </xsl:text>
+        <xsl:text>docker image build --quiet </xsl:text>
+        <xsl:value-of select="@name"/>
+        <xsl:text> --file </xsl:text>
         <xsl:value-of select="$uuid"/>
         <xsl:text> .</xsl:text>
         <exsl:document href="/home/user/dockerfiles/{$uuid}" method="text">

@@ -53,6 +53,7 @@
                 </xsl:for-each>
                 <xsl:text>]</xsl:text>
             </xsl:element>
+            <xsl:attribute name="name" select="@name"/>
         </xsl:element>
     </xsl:template>
     <xsl:template name="json">
