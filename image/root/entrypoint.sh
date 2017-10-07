@@ -18,8 +18,9 @@ export PATH=${HOME}/bin:${PATH} &&
         --name gitlab \
         --restart always \
         gitlab/gitlab-ce:latest &&
-    docker network connect bridge chromium &&
-    docker network connect --alias gitlab bridge gitlab &&
+    docker network create system &&
+    docker network connect system chromium &&
+    docker network connect --alias gitlab system gitlab &&
     docker container ps --all --quiet | while read ID
     do
         docker container start ${ID}
