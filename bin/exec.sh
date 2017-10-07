@@ -25,6 +25,7 @@ DIND=$(mktemp) &&
         --tty \
         --cidfile ${WORK} \
         endlessplanet/personal:$(git rev-parse --verify HEAD) &&
+    docker network create $(uuidgen) > ${NET} &&
     docker network connect --alias docker $(cat ${NET}) $(cat ${DIND}) &&
     docker network connect $(cat ${NET}) $(cat ${WORK}) &&
     docker container start $(cat ${DIND}) &&

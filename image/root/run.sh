@@ -2,7 +2,7 @@
 
 apk update &&
     apk upgrade &&
-    apk add --no-cache bash &&
+    apk add --no-cache bash util-linux &&
     adduser -D user &&
     mkdir /home/user/bin &&
     ls -1 /opt/docker/bin | while read FILE
