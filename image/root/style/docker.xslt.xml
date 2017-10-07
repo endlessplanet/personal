@@ -1,7 +1,10 @@
 <?xml version="1.0"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:exsl="http://exslt.org/common" extension-element-prefixes="exsl">
+    <xsl:output method="text"/>
     <xsl:template match="/docker">
-        <xsl:apply-templates select="login|image"></xsl:apply-templates>
+        <exsl:document href="/home/user/build-images">
+            <xsl:apply-templates select="login|image"></xsl:apply-templates>
+        </exsl:document>
     </xsl:template>
     <xsl:template match="image">
         <xsl:apply-templates select="build"></xsl:apply-templates>
@@ -16,7 +19,7 @@
         <xsl:text>docker image build --quiet --file </xsl:text>
         <xsl:value-of select="$uuid"/>
         <xsl:text> .</xsl:text>
-        <exsl:document href="dockerfiles/{$uuid}" method="text">
+        <exsl:document href="/home/user/dockerfiles/{$uuid}" method="text">
             <xsl:apply-templates select="from|run|cmd|label|maintainer|expose|env|add|copy|entrypoint|volume|user|workdir|arg|onbuild|stopsignal|healthcheck|shell"></xsl:apply-templates>
         </exsl:document>
         <xsl:value-of select="$eol"/>
