@@ -74,7 +74,7 @@
                 <xsl:value-of select="@image"/>
             </xsl:attribute>
             <xsl:element name="from">
-                <xsl:text>alpine:3.4</xsl:text>
+                <xsl:text>fedora:26</xsl:text>
             </xsl:element>
             <xsl:element name="run">
                 <xsl:text>dnf update --assumeyes </xsl:text>
