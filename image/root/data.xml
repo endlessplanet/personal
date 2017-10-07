@@ -1,5 +1,9 @@
 <?xml version="1.0"?>
 <images>
+    <alpine package="firefox-esr" image="firefox">
+        <entrypoint>firefox</entrypoint>
+        <cmd></cmd>
+    </alpine>
     <alpine package="git" image="git">
         <entrypoint>git</entrypoint>
         <cmd></cmd>
