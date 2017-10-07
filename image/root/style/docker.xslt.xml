@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:exsl="http://exslt.org/common" extension-element-prefixes="exsl">
+    <xsl:template match="/docker">
+        <xsl:apply-templates select="login|image"></xsl:apply-templates>
+    </xsl:template>
+    <xsl:template match="image">
+        <xsl:apply-templates select="build"></xsl:apply-templates>
+    </xsl:template>
+    <xsl:template match="pull">
+        <xsl:text>docker pull </xsl:text>
+        <xsl:value-of select="."/>
+        <xsl:value-of select="$eol"/>
+    </xsl:template>
+    <xsl:template match="build">
+        <xsl:variable name="uuid" select="generate-id(.)"/>
+        <xsl:text>docker image build --quiet --file </xsl:text>
+        <xsl:value-of select="$uuid"/>
+        <xsl:text> .</xsl:text>
+        <exsl:document href="{$uuid}" method="text">
+            <xsl:apply-templates select="from|run|cmd|label|maintainer|expose|env|add|copy|entrypoint|volume|user|workdir|arg|onbuild|stopsignal|healthcheck|shell"></xsl:apply-templates>
+        </exsl:document>
+        <xsl:value-of select="$eol"/>
+    </xsl:template>
+    <xsl:template match="from">
+        <xsl:text>FROM </xsl:text>
+        <xsl:value-of select="."/>
+        <xsl:value-of select="$newline" />
+    </xsl:template>
+    <xsl:template match="from">
+        <xsl:call-template name="dockerfile-instruction">
+            <xsl:with-param name="name">FROM</xsl:with-param>
+        </xsl:call-template>
+    </xsl:template>
+    <xsl:template match="run">
+        <xsl:call-template name="dockerfile-instruction">
+           <xsl:with-param name="name">RUN</xsl:with-param>
+        </xsl:call-template>
+    </xsl:template>
+    <xsl:template match="cmd">
+        <xsl:call-template name="dockerfile-instruction">
+           <xsl:with-param name="name">CMD</xsl:with-param>
+        </xsl:call-template>
+    </xsl:template>
+    <xsl:template match="label">
+        <xsl:call-template name="dockerfile-instruction">
+           <xsl:with-param name="name">LABEL</xsl:with-param>
+        </xsl:call-template>
+    </xsl:template>
+    <xsl:template match="maintainer">
+        <xsl:call-template name="maintainer">
+           <xsl:with-param name="name">LABEL</xsl:with-param>
+        </xsl:call-template>
+    </xsl:template>
+    <xsl:template match="expose">
+        <xsl:call-template name="expose">
+           <xsl:with-param name="name">LABEL</xsl:with-param>
+        </xsl:call-template>
+    </xsl:template>
+    <xsl:template match="env">
+        <xsl:call-template name="env">
+           <xsl:with-param name="name">LABEL</xsl:with-param>
+        </xsl:call-template>
+    </xsl:template>
+    <xsl:template match="add">
+        <xsl:call-template name="dockerfile-instruction">
+           <xsl:with-param name="name">ADD</xsl:with-param>
+        </xsl:call-template>
+    </xsl:template>
+    <xsl:template match="copy">
+        <xsl:call-template name="dockerfile-instruction">
+           <xsl:with-param name="name">ADD</xsl:with-param>
+        </xsl:call-template>
+    </xsl:template>
+    <xsl:template match="entrypoint">
+        <xsl:call-template name="dockerfile-instruction">
+           <xsl:with-param name="name">ENTRYPOINT</xsl:with-param>
+        </xsl:call-template>
+    </xsl:template>
+    <xsl:template match="volume">
+        <xsl:call-template name="dockerfile-instruction">
+           <xsl:with-param name="name">VOLUME</xsl:with-param>
+        </xsl:call-template>
+    </xsl:template>
+    <xsl:template match="user">
+        <xsl:call-template name="dockerfile-instruction">
+           <xsl:with-param name="name">USER</xsl:with-param>
+        </xsl:call-template>
+    </xsl:template>
+    <xsl:template match="workdir">
+        <xsl:call-template name="dockerfile-instruction">
+           <xsl:with-param name="name">WORKDIR</xsl:with-param>
+        </xsl:call-template>
+    </xsl:template>
+    <xsl:template match="arg">
+        <xsl:call-template name="dockerfile-instruction">
+           <xsl:with-param name="name">ARG</xsl:with-param>
+        </xsl:call-template>
+    </xsl:template>
+    <xsl:template match="onbuild">
+        <xsl:call-template name="dockerfile-instruction">
+           <xsl:with-param name="name">ONBUILD</xsl:with-param>
+        </xsl:call-template>
+    </xsl:template>
+    <xsl:template match="stopsignal">
+        <xsl:call-template name="dockerfile-instruction">
+           <xsl:with-param name="name">STOPSIGNAL</xsl:with-param>
+        </xsl:call-template>
+    </xsl:template>
+    <xsl:template match="healthcheck">
+        <xsl:call-template name="dockerfile-instruction">
+           <xsl:with-param name="name">HEALTHCHECK</xsl:with-param>
+        </xsl:call-template>
+    </xsl:template>
+    <xsl:template match="shell">
+        <xsl:call-template name="dockerfile-instruction">
+           <xsl:with-param name="name">SHELL</xsl:with-param>
+        </xsl:call-template>
+    </xsl:template>
+    <xsl:template name="dockerfile-instruction">
+        <xsl:param name="name"></xsl:param>
+        <xsl:value-of select="$name"/>
+        <xsl:text> </xsl:text>
+        <xsl:value-of select="."/>
+        <xsl:value-of select="$newline"/>
+    </xsl:template>
+    <xsl:variable name="newline">
+        <xsl:text><![CDATA[
+]]></xsl:text>
+    </xsl:variable>
+    <xsl:variable name="eol">
+        <xsl:text> &amp;&amp;</xsl:text>
+        <xsl:value-of select="$newline"/>
+    </xsl:variable>
+</xsl:stylesheet>
