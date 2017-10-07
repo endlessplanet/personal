@@ -17,7 +17,7 @@ DIND=$(mktemp) &&
         --cidfile ${DIND} \
         --privileged \
         --volume /tmp/.X11-unix:/var/opt/.X11-unix:ro \
-        docker:17.09.0-ce-dind
+        docker:17.09.0-ce-dind \
             --host tcp://0.0.0.0:3276 &&
     docker \
         container \
