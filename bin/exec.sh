@@ -21,6 +21,7 @@ DIND=$(mktemp) &&
     docker \
         container \
         create \
+        --cidfile ${WORK} \
         --interactive \
         --tty \
         --cidfile ${WORK} \
