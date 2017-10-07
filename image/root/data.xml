@@ -23,4 +23,8 @@
         <entrypoint>openssl</entrypoint>
         <cmd></cmd>
     </alpine>
+    <fedora package="emacs" image="emacs">
+        <entrypoint>emacs</entrypoint>
+        <cmd></cmd>
+    </fedora>
 </images>

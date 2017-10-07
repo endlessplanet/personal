@@ -39,6 +39,69 @@
             <xsl:element name="volume">
                 <xsl:text>/home</xsl:text>
             </xsl:element>
+            <xsl:element name="workdir">
+                <xsl:text>/home/user</xsl:text>
+            </xsl:element>
+            <xsl:element name="entrypoint">
+                <xsl:text>[</xsl:text>
+                <xsl:for-each select="entrypoint">
+                    <xsl:text>"</xsl:text>
+                    <xsl:value-of select="."/>
+                    <xsl:text>"</xsl:text>
+                    <xsl:if test="position() != last()">
+                        <xsl:text>,</xsl:text>
+                    </xsl:if>
+                </xsl:for-each>
+                <xsl:text>]</xsl:text>
+             </xsl:element>
+            <xsl:element name="cmd">
+                <xsl:text>[</xsl:text>
+                <xsl:for-each select="cmd">
+                    <xsl:text>"</xsl:text>
+                    <xsl:value-of select="."/>
+                    <xsl:text>"</xsl:text>
+                    <xsl:if test="position() != last()">
+                        <xsl:text>,</xsl:text>
+                    </xsl:if>
+                </xsl:for-each>
+                <xsl:text>]</xsl:text>
+            </xsl:element>
+        </xsl:element>
+    </xsl:template>
+    <xsl:template match="fedora">
+        <xsl:element name="build">
+            <xsl:attribute name="name">
+                <xsl:value-of select="@image"/>
+            </xsl:attribute>
+            <xsl:element name="from">
+                <xsl:text>alpine:3.4</xsl:text>
+            </xsl:element>
+            <xsl:element name="run">
+                <xsl:text>dnf update --assumeyes </xsl:text>
+                <xsl:value-of select="$doubleamp"/>
+                <xsl:text> dnf install --assumeyes </xsl:text>
+                <xsl:value-of select="@package"/>
+                <xsl:text> </xsl:text>
+                <xsl:value-of select="$doubleamp"/>
+                <xsl:text> adduser user </xsl:text>
+                <xsl:value-of select="$doubleamp"/>
+                <xsl:for-each select="instruction">
+                    <xsl:value-of select="."/>
+                    <xsl:value-of select="$doubleamp"/>
+                </xsl:for-each>
+                <xsl:text> dnf update --assumeyes</xsl:text>
+                <xsl:value-of select="$doubleamp"/>
+                <xsl:text> dnf clean all</xsl:text>
+            </xsl:element>
+            <xsl:element name="user">
+                <xsl:text>user</xsl:text>
+            </xsl:element>
+            <xsl:element name="volume">
+                <xsl:text>/home</xsl:text>
+            </xsl:element>
+            <xsl:element name="workdir">
+                <xsl:text>/home/user</xsl:text>
+            </xsl:element>
             <xsl:element name="entrypoint">
                 <xsl:text>[</xsl:text>
                 <xsl:for-each select="entrypoint">
