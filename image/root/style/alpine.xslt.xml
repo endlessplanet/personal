@@ -3,7 +3,7 @@
     <xsl:output method="xml" indent="yes"/>
     <xsl:template match="/images">
         <xsl:element name="docker">
-            <xsl:element name="build">
+            <xsl:element name="image">
                 <xsl:apply-templates select="alpine"/>
             </xsl:element>
         </xsl:element>
