@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<images>
+    <alpine package="git">
+        <entrypoint>git</entrypoint>
+        <cmd></cmd>
+    </alpine>
+</images>

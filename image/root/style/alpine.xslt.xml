@@ -1,46 +1,66 @@
 <?xml version="1.0"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:exsl="http://exslt.org/common" extension-element-prefixes="exsl">
     <xsl:output method="xml" indent="yes"/>
-    <xsl:template match="/">
+    <xsl:template match="/images">
         <xsl:element name="docker">
             <xsl:element name="build">
-                <xsl:apply-templates select="alpine"></xsl:apply-templates>
+                <xsl:apply-templates select="alpine"/>
             </xsl:element>
         </xsl:element>
     </xsl:template>
     <xsl:template match="alpine">
-        <xsl:element name="from">
-            <xsl:text>alpine:3.4</xsl:text>
-        </xsl:element>
-        <xsl:element name="run">
-            <xsl:text>apk update </xsl:text>
-            <xsl:value-of select="$doubleamp"/>
-            <xsl:text> apk upgrade </xsl:text>
-            <xsl:value-of select="$doubleamp"/>
-            <xsl:text> apk add --no-cache </xsl:text>
-            <xsl:value-of select="@package"/>
-            <xsl:text> </xsl:text>
-            <xsl:value-of select="$doubleamp"/>
-            <xsl:text> adduser -D user </xsl:text>
-            <xsl:value-of select="$doubleamp"/>
-            <xsl:text> rm -rf /var/cache/apk/*</xsl:text>
-        </xsl:element>
-        <xsl:element name="user">
-            <xsl:text>user</xsl:text>
-        </xsl:element>
-        <xsl:element name="entrypoint">
-            <xsl:call-template name="json"></xsl:call-template>
-        </xsl:element>
-        <xsl:element name="cmd">
-           <xsl:call-template name="json"></xsl:call-template>
+        <xsl:element name="build">
+            <xsl:element name="from">
+                <xsl:text>alpine:3.4</xsl:text>
+            </xsl:element>
+            <xsl:element name="run">
+                <xsl:text>apk update </xsl:text>
+                <xsl:value-of select="$doubleamp"/>
+                <xsl:text> apk upgrade </xsl:text>
+                <xsl:value-of select="$doubleamp"/>
+                <xsl:text> apk add --no-cache </xsl:text>
+                <xsl:value-of select="@package"/>
+                <xsl:text> </xsl:text>
+                <xsl:value-of select="$doubleamp"/>
+                <xsl:text> adduser -D user </xsl:text>
+                <xsl:value-of select="$doubleamp"/>
+                <xsl:text> rm -rf /var/cache/apk/*</xsl:text>
+            </xsl:element>
+            <xsl:element name="user">
+                <xsl:text>user</xsl:text>
+            </xsl:element>
+            <xsl:element name="entrypoint">
+                <xsl:text>[</xsl:text>
+                <xsl:for-each select="entrypoint">
+                    <xsl:text>"</xsl:text>
+                    <xsl:value-of select="."/>
+                    <xsl:text>"</xsl:text>
+                    <xsl:if test="position() != last()">
+                        <xsl:text>,</xsl:text>
+                    </xsl:if>
+                </xsl:for-each>
+                <xsl:text>]</xsl:text>
+             </xsl:element>
+            <xsl:element name="cmd">
+                <xsl:text>[</xsl:text>
+                <xsl:for-each select="cmd">
+                    <xsl:text>"</xsl:text>
+                    <xsl:value-of select="."/>
+                    <xsl:text>"</xsl:text>
+                    <xsl:if test="position() != last()">
+                        <xsl:text>,</xsl:text>
+                    </xsl:if>
+                </xsl:for-each>
+                <xsl:text>]</xsl:text>
+            </xsl:element>
         </xsl:element>
     </xsl:template>
     <xsl:template name="json">
         <xsl:text>[</xsl:text>
-        <xsl:for-each select="args">
+        <xsl:for-each select="arg">
             <xsl:text>"</xsl:text>
             <xsl:value-of select="."/>
-            </xsl:text>"</xsl:text>
+            <xsl:text>"</xsl:text>
             <xsl:if test="position() != last()">
                 <xsl:text>,</xsl:text>
             </xsl:if>

@@ -16,7 +16,7 @@
         <xsl:text>docker image build --quiet --file </xsl:text>
         <xsl:value-of select="$uuid"/>
         <xsl:text> .</xsl:text>
-        <exsl:document href="{$uuid}" method="text">
+        <exsl:document href="dockerfiles/{$uuid}" method="text">
             <xsl:apply-templates select="from|run|cmd|label|maintainer|expose|env|add|copy|entrypoint|volume|user|workdir|arg|onbuild|stopsignal|healthcheck|shell"></xsl:apply-templates>
         </exsl:document>
         <xsl:value-of select="$eol"/>
