@@ -4,4 +4,8 @@
         <entrypoint>git</entrypoint>
         <cmd></cmd>
     </alpine>
+    <alpine package="openssl">
+        <entrypoint>openssl</entrypoint>
+        <cmd></cmd>
+    </alpine>
 </images>
