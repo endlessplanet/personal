@@ -2,7 +2,7 @@
 
 apk update &&
     apk upgrade &&
-    apk add --no-cache bash util-linux &&
+    apk add --no-cache bash util-linux libxslt &&
     adduser -D user &&
     mkdir /home/user/bin &&
     ls -1 /opt/docker/bin | while read FILE
