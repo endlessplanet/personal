@@ -17,7 +17,7 @@
     </xsl:template>
     <xsl:template match="build">
         <xsl:variable name="uuid" select="generate-id(.)"/>
-        <xsl:text>docker image build --quiet </xsl:text>
+        <xsl:text>docker image build </xsl:text>
         <xsl:value-of select="@name"/>
         <xsl:text> --file </xsl:text>
         <xsl:value-of select="$uuid"/>

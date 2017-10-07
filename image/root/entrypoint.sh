@@ -1,5 +1,5 @@
 #!/bin/sh
 
 export PATH=${HOME}/bin:${PATH} &&
-    sh dockerfiles/build-images.sh &&
+    (cd dockerfiles && sh build-images.sh) &&
     bash
