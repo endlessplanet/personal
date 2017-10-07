@@ -10,6 +10,7 @@
     </xsl:template>
     <xsl:template match="alpine">
         <xsl:element name="build">
+            <xsl:attribute name="name" select="@name"/>
             <xsl:element name="from">
                 <xsl:text>alpine:3.4</xsl:text>
             </xsl:element>
@@ -53,7 +54,6 @@
                 </xsl:for-each>
                 <xsl:text>]</xsl:text>
             </xsl:element>
-            <xsl:attribute name="name" select="@name"/>
         </xsl:element>
     </xsl:template>
     <xsl:template name="json">
