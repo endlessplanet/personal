@@ -7,7 +7,7 @@ DIND=$(mktemp) &&
     cleanup(){
         docker container stop $(cat ${DIND}) $(cat ${WORK}) &&
             docker container rm --volumes $(cat ${DIND}) $(cat ${WORK}) &&
-            docker network rwgrf6gyth76 ghnrrr $(cat ${NET}) &&
+            docker network rm $(cat ${NET}) &&
             rm -f ${DIND} ${WORK} ${NET}
     } &&
     trap cleanup EXIT &&
