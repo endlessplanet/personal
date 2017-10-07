@@ -10,7 +10,9 @@
     </xsl:template>
     <xsl:template match="alpine">
         <xsl:element name="build">
-            <xsl:attribute name="name" select="@image"/>
+            <xsl:attribute name="name">
+                <xsl:value-of select="@image"/>
+            </xsl:attribute>
             <xsl:element name="from">
                 <xsl:text>alpine:3.4</xsl:text>
             </xsl:element>
