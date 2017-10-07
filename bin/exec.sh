@@ -17,6 +17,7 @@ DIND=$(mktemp) &&
         --cidfile ${DIND} \
         --privileged \
         --volume /tmp/.X11-unix:/var/opt/.X11-unix:ro \
+        --env DISPLAY \
         docker:17.09.0-ce-dind \
             --host tcp://0.0.0.0:3276 &&
     docker \
@@ -26,6 +27,7 @@ DIND=$(mktemp) &&
         --interactive \
         --tty \
         --env DOCKER_HOST=tcp://docker:3276 \
+        --env DISPLAY \
         endlessplanet/personal:$(git rev-parse --verify HEAD) &&
     docker network create $(uuidgen) > ${NET} &&
     docker network connect --alias docker $(cat ${NET}) $(cat ${DIND}) &&
