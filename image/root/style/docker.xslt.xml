@@ -2,7 +2,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:exsl="http://exslt.org/common" extension-element-prefixes="exsl">
     <xsl:output method="text"/>
     <xsl:template match="/docker">
-        <exsl:document href="/home/user/build-images">
+        <exsl:document href="/home/user/dockerfiles/build-images.sh">
             <xsl:apply-templates select="login|image"></xsl:apply-templates>
         </exsl:document>
     </xsl:template>
