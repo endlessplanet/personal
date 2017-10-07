@@ -7,6 +7,7 @@ export PATH=${HOME}/bin:${PATH} &&
     docker \
         container \
         create \
+        --name chromium \
         --restart always \
         --mount type=bind,source=/srv/root/tmp/.X11-unix,destination=/tmp/.X11-unix,readonly=true \
         --env DISPLAY \
@@ -17,6 +18,8 @@ export PATH=${HOME}/bin:${PATH} &&
         --name gitlab \
         --restart always \
         gitlab/gitlab-ce:latest &&
+    docker network connect bridge chromium &&
+    docker network connect --alias gitlab bridge gitlab &&
     docker container ps --all --quiet | while read ID
     do
         docker container start ${ID}
