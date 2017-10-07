@@ -1,7 +1,18 @@
 <?xml version="1.0"?>
 <images>
+    <alpine package="dbus" image="dbus">
+        <entrypoint>dbus</entrypoint>
+        <cmd></cmd>
+    </alpine>
+    <alpine package="ttf-freefont" image="ttf-freefont">
+        <entrypoint>ttf-freefont</entrypoint>
+        <cmd></cmd>
+    </alpine>
     <alpine package="firefox-esr" image="firefox">
         <entrypoint>firefox</entrypoint>
+        <instruction>apk add --no-cache dbus</instruction>
+        <instruction>dbus-uuidgen > /var/lib/dbus/machine-id</instruction>
+        <instruction>apk add --no-cache ttf-freefont</instruction>
         <cmd></cmd>
     </alpine>
     <alpine package="git" image="git">

@@ -27,6 +27,10 @@
                 <xsl:value-of select="$doubleamp"/>
                 <xsl:text> adduser -D user </xsl:text>
                 <xsl:value-of select="$doubleamp"/>
+                <xsl:for-each select="instruction">
+                    <xsl:value-of select="."/>
+                    <xsl:value-of select="$doubleamp"/>
+                </xsl:for-each>
                 <xsl:text> rm -rf /var/cache/apk/*</xsl:text>
             </xsl:element>
             <xsl:element name="user">
