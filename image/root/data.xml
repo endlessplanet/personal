@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <images>
-    <alpine package="git" name="git">
+    <alpine package="git" image="git">
         <entrypoint>git</entrypoint>
         <cmd></cmd>
     </alpine>
-    <alpine package="openssl" name="openssl">
+    <alpine package="openssl" image="openssl">
         <entrypoint>openssl</entrypoint>
         <cmd></cmd>
     </alpine>

@@ -10,7 +10,7 @@
     </xsl:template>
     <xsl:template match="alpine">
         <xsl:element name="build">
-            <xsl:attribute name="name" select="@name"/>
+            <xsl:attribute name="name" select="@image"/>
             <xsl:element name="from">
                 <xsl:text>alpine:3.4</xsl:text>
             </xsl:element>
@@ -29,6 +29,9 @@
             </xsl:element>
             <xsl:element name="user">
                 <xsl:text>user</xsl:text>
+            </xsl:element>
+            <xsl:element name="volume">
+                <xsl:text>/home</xsl:text>
             </xsl:element>
             <xsl:element name="entrypoint">
                 <xsl:text>[</xsl:text>
