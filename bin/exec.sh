@@ -17,7 +17,6 @@ DIND=$(mktemp) &&
         --cidfile ${DIND} \
         --privileged \
         --volume /:/srv/root:ro \
-        --env DISPLAY \
         docker:17.09.0-ce-dind \
             --host tcp://0.0.0.0:3276 &&
     docker \
