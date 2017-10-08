@@ -27,6 +27,10 @@ DIND=$(mktemp) &&
         --tty \
         --env DOCKER_HOST=tcp://docker:3276 \
         --env DISPLAY \
+        --env AWS_ACCESS_KEY_ID \
+        --env AWS_SECRET_ACCESS_KEY \
+        --env AWS_DEFAULT_REGION \
+        --env GITLAB_BACKUP_BUCKET \
         endlessplanet/personal:$(git rev-parse --verify HEAD) &&
     docker network create $(uuidgen) > ${NET} &&
     docker network connect --alias docker $(cat ${NET}) $(cat ${DIND}) &&
