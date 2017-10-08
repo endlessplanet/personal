@@ -51,8 +51,8 @@ export PATH=${HOME}/bin:${PATH} &&
         --interactive \
         --tty \
         --rm \
-        --mount type=volume,source=gitlab-backup,destination=/var/backup \
-        --workdir /var/backup \
+        --mount type=volume,source=gitlab-backup,destination=/var/backups \
+        --workdir /var/backups \
         alpine:3.4 \
             mkdir gitlab &&
     docker \
@@ -61,8 +61,8 @@ export PATH=${HOME}/bin:${PATH} &&
         --interactive \
         --tty \
         --rm \
-        --mount type=volume,source=gitlab-backup,destination=/var/backup \
-        --workdir /var/backup \
+        --mount type=volume,source=gitlab-backup,destination=/var/backups \
+        --workdir /var/backups \
         alpine:3.4 \
             chmod 0777 gitlab &&
     export GITLAB_ROOT_PASSWORD=$(uuidgen) &&
