@@ -3,6 +3,7 @@
 export PATH=${HOME}/bin:${PATH} &&
     docker network create system &&
     docker volume create gitlab-config &&
+    docker volume create gitlab-data &&
     docker \
         container \
         run \
@@ -48,6 +49,7 @@ export PATH=${HOME}/bin:${PATH} &&
         --name gitlab \
         --restart always \
         --mount type=volume,source=gitlab-config,destination=/etc/gitlab \
+        --mount type=volume,source=gitlab-data,destination=/opt/gitlab \
         --env GITLAB_ROOT_PASSWORD \
         --env GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN \
         gitlab/gitlab-ce:latest &&
