@@ -73,7 +73,7 @@ export PATH=${HOME}/bin:${PATH} &&
         --name gitlab \
         --restart always \
         --mount type=volume,source=gitlab-config,destination=/etc/gitlab \
-        --mount type=volume,source=gitlab-backup,destination=/var/backups,readonly=true \
+        --mount type=volume,source=gitlab-backup,destination=/var/backups \
         --env GITLAB_ROOT_PASSWORD \
         --env GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN \
         gitlab/gitlab-ce:latest &&
