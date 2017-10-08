@@ -32,6 +32,14 @@ export PATH=${HOME}/bin:${PATH} &&
             gitlab.rb &&
     docker \
         container \
+        create \
+        --name gitlab \
+        --restart always \
+        gitlab/gitlab-ce:latest &&
+    docker network connect --alias gitlab system gitlab &&
+    docker container start gitlab &&
+    docker \
+        container \
         run \
         --detach \
         --restart always \
@@ -40,12 +48,4 @@ export PATH=${HOME}/bin:${PATH} &&
         --env DISPLAY \
         --network system \
         sassmann/debian-chromium &&
-    docker \
-        container \
-        create \
-        --name gitlab \
-        --restart always \
-        gitlab/gitlab-ce:latest &&
-    docker network connect --alias gitlab system gitlab &&
-    docker container start gitlab &&
     bash
