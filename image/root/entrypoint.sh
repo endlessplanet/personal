@@ -3,6 +3,16 @@
 export PATH=${HOME}/bin:${PATH} &&
     docker network create system &&
     docker volume create gitlab-config &&
+    docker \
+        container \
+        run \
+        --interactive \
+        --rm \
+        --mount type=volume,source=gitlab-config,destination=/etc/gitlab \
+        --workdir /etc/gitlab \
+        alpine:3.4 \
+            mkdir \
+            ssl &&
     cat \
         /opt/docker/openssl.txt | docker \
         container \
@@ -10,7 +20,7 @@ export PATH=${HOME}/bin:${PATH} &&
         --interactive \
         --rm \
         --mount type=volume,source=gitlab-config,destination=/etc/gitlab \
-        --workdir /etc/gitlab \
+        --workdir /etc/gitlab/ssl \
         jordi/openssl \
             openssl \
             req -x509 \
@@ -35,6 +45,7 @@ export PATH=${HOME}/bin:${PATH} &&
         create \
         --name gitlab \
         --restart always \
+        --mount type=volume,source=gitlab-config,destination=/etc/gitlab \
         gitlab/gitlab-ce:latest &&
     docker network connect --alias gitlab system gitlab &&
     docker container start gitlab &&
