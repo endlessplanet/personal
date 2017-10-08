@@ -3,6 +3,7 @@
 export PATH=${HOME}/bin:${PATH} &&
     docker network create system &&
     docker volume create gitlab-config &&
+    docker volume create gitlab-backup &&
     docker \
         container \
         run \
@@ -44,6 +45,26 @@ export PATH=${HOME}/bin:${PATH} &&
         alpine:3.4 \
             tee \
             gitlab.rb &&
+    docker \
+        container \
+        run \
+        --interactive \
+        --tty \
+        --rm \
+        --mount type=volume,source=gitlab-backup,destination=/var/backup \
+        --workdir /var/backup \
+        alpine:3.4 \
+            mkdir gitlab &&
+    docker \
+        container \
+        run \
+        --interactive \
+        --tty \
+        --rm \
+        --mount type=volume,source=gitlab-backup,destination=/var/backup \
+        --workdir /var/backup \
+        alpine:3.4 \
+            chmod 0777 gitlab &&
     export GITLAB_ROOT_PASSWORD=$(uuidgen) &&
     export GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN=$(uuidgen) &&
     docker \
@@ -64,6 +85,7 @@ export PATH=${HOME}/bin:${PATH} &&
         --restart always \
         --mount type=bind,source=/srv/root/tmp/.X11-unix,destination=/tmp/.X11-unix,readonly=true \
         --mount type=volume,source=gitlab-config,destination=/etc/gitlab,readonly=true \
+        --mount type=volume,source=gitlab-backup,destination=/var/backups,readonly=true \
         --env DISPLAY \
         --network system \
         sassmann/debian-chromium &&
