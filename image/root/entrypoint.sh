@@ -40,12 +40,16 @@ export PATH=${HOME}/bin:${PATH} &&
         alpine:3.4 \
             tee \
             gitlab.rb &&
+    export GITLAB_ROOT_PASSWORD=$(uuidgen) &&
+    export GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN=$(uuidgen) &&
     docker \
         container \
         create \
         --name gitlab \
         --restart always \
         --mount type=volume,source=gitlab-config,destination=/etc/gitlab \
+        --env GITLAB_ROOT_PASSWORD \
+        --env GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN \
         gitlab/gitlab-ce:latest &&
     docker network connect --alias gitlab system gitlab &&
     docker container start gitlab &&
@@ -59,4 +63,6 @@ export PATH=${HOME}/bin:${PATH} &&
         --env DISPLAY \
         --network system \
         sassmann/debian-chromium &&
+    echo GITLAB_ROOT_PASSWORD=${GITLAB_ROOT_PASSWORD} &&
+    echo GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN=${GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN} &&
     bash
