@@ -5,6 +5,25 @@ docker exec --interactive --tty gitlab gitlab-rake gitlab:backup:create &&
     do
         docker \
             run \
+            --interactive \
+            --tty \
+            --rm \
+            --mount type=volume,source=gitlab-data,destination=/opt/gitlab \
+            --workdir /opt/gitlab/backups \
+            alpine:3.4 \
+                gzip -9 ${BACKUP} &&
+        docker \
+            run \
+            --interactive \
+            --tty \
+            --rm \
+            --mount type=volume,source=gitlab-data,destination=/opt/gitlab \
+            --workdir /opt/gitlab/backups \
+            alpine:3.4 \
+                rm -f ${BACKUP}.gz
+        done &&
+        docker \
+            run \
             --env AWS_ACCESS_KEY_ID \
             --env AWS_SECRET_ACCESS_KEY \
             --env AWS_DEFAULT_REGION \

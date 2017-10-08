@@ -3,7 +3,6 @@
 export PATH=${HOME}/bin:${PATH} &&
     docker network create system &&
     docker volume create gitlab-config &&
-    docker volume create gitlab-data &&
     docker \
         container \
         run \
@@ -30,7 +29,11 @@ export PATH=${HOME}/bin:${PATH} &&
             -out gitlab.crt \
             -days 365 \
             -nodes &&
-    cat \
+    sed \
+        -e "s#d8b207ab-5e71-4b6e-bd6a-aa14dec16443#${AWS_DEFAULT_REGION}#g" \
+        -e "s#0b37a2a1-00cb-4145-a3a2-bb1490fb5c4e#${AWS_ACCESS_KEY_ID}#g" \
+        -e "s#3901d14f-6aee-4d23-8894-36ec77749b57#${AWS_SECRET_ACCESS_KEY}#g" \
+        -e "s#640023b9-70b9-4a07-8a6d-481e0d275d8b#${GITLAB_BACKUP_BUCKET}#g" \
         /opt/docker/gitlab.rb | docker \
         container \
         run \
@@ -49,7 +52,6 @@ export PATH=${HOME}/bin:${PATH} &&
         --name gitlab \
         --restart always \
         --mount type=volume,source=gitlab-config,destination=/etc/gitlab \
-        --mount type=volume,source=gitlab-data,destination=/opt/gitlab \
         --env GITLAB_ROOT_PASSWORD \
         --env GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN \
         gitlab/gitlab-ce:latest &&

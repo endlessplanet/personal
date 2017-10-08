@@ -276,17 +276,17 @@ external_url 'https://gitlab'
 
 # gitlab_rails['backup_pg_schema'] = 'public'
 
-###! The duration in seconds to keep backups before they are allowed to be deleted
-# gitlab_rails['backup_keep_time'] = 604800
+##! The duration in seconds to keep backups before they are allowed to be deleted
+gitlab_rails['backup_keep_time'] = 604800
 
-# gitlab_rails['backup_upload_connection'] = {
-#   'provider' => 'AWS',
-#   'region' => 'eu-west-1',
-#   'aws_access_key_id' => 'AKIAKIAKI',
-#   'aws_secret_access_key' => 'secret123'
-# }
-# gitlab_rails['backup_upload_remote_directory'] = 'my.s3.bucket'
-# gitlab_rails['backup_multipart_chunk_size'] = 104857600
+gitlab_rails['backup_upload_connection'] = {
+  'provider' => 'AWS',
+  'region' => 'd8b207ab-5e71-4b6e-bd6a-aa14dec16443',
+  'aws_access_key_id' => '0b37a2a1-00cb-4145-a3a2-bb1490fb5c4e',
+  'aws_secret_access_key' => '3901d14f-6aee-4d23-8894-36ec77749b57'
+}
+gitlab_rails['backup_upload_remote_directory'] = '640023b9-70b9-4a07-8a6d-481e0d275d8b'
+gitlab_rails['backup_multipart_chunk_size'] = 104857600
 
 ###! **Turns on AWS Server-Side Encryption with Amazon S3-Managed Keys for
 ###!   backups**
