@@ -73,6 +73,7 @@ export PATH=${HOME}/bin:${PATH} &&
         --name gitlab \
         --restart always \
         --mount type=volume,source=gitlab-config,destination=/etc/gitlab \
+        --mount type=volume,source=gitlab-backup,destination=/var/backups,readonly=true \
         --env GITLAB_ROOT_PASSWORD \
         --env GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN \
         gitlab/gitlab-ce:latest &&
@@ -85,7 +86,6 @@ export PATH=${HOME}/bin:${PATH} &&
         --restart always \
         --mount type=bind,source=/srv/root/tmp/.X11-unix,destination=/tmp/.X11-unix,readonly=true \
         --mount type=volume,source=gitlab-config,destination=/etc/gitlab,readonly=true \
-        --mount type=volume,source=gitlab-backup,destination=/var/backups,readonly=true \
         --env DISPLAY \
         --network system \
         sassmann/debian-chromium &&

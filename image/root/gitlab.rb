@@ -268,8 +268,8 @@ external_url 'https://gitlab'
 ### Backup Settings
 ###! Docs: https://docs.gitlab.com/omnibus/settings/backups.html
 
-# gitlab_rails['manage_backup_path'] = true
-# gitlab_rails['backup_path'] = "/var/opt/backups/application"
+gitlab_rails['manage_backup_path'] = true
+gitlab_rails['backup_path'] = "/var/backups/gitlab"
 
 ###! Docs: https://docs.gitlab.com/ce/raketasks/backup_restore.html#backup-archive-permissions
 # gitlab_rails['backup_archive_permissions'] = 0644
