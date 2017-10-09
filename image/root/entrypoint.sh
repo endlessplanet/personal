@@ -116,7 +116,7 @@ export PATH=${HOME}/bin:${PATH} &&
     docker container exec --interactive --tty gitlab gitlab-ctl reconfigure &&
     docker container exec --interactive --tty gitlab gitlab-ctl stop unicorn &&
     docker container exec --interactive --tty gitlab gitlab-ctl stop sidekiq &&
-    docker \
+    BACKUP2=$(docker \
         container \
         run \
         --interactive \
@@ -125,36 +125,21 @@ export PATH=${HOME}/bin:${PATH} &&
         --mount type=volume,source=gitlab-backup,destination=/var/backups \
         --workdir /var/backups/gitlab \
         alpine:3.4 \
-            ls -1 | sort | tail -n 1 | while read BACKUP2
-            do
-                    BACKUP1=${BACKUP2%_*} &&
-                    echo \
-                        docker \
-                        container \
-                        exec \
-                        --interactive \
-                        gitlab \
-                        gitlab-rake \
-                        gitlab:backup:restore \
-                        BACKUP=${BACKUP1%_*} &&
-                    while ! (cat <<EOF
+            ls -1 | sort | tail -n 1)
+    BACKUP1=${BACKUP2%_*} &&
+    (cat <<EOF
 yes
 yes
 
 EOF
-                    ) | docker \
-                        container \
-                        exec \
-                        --interactive \
-                        gitlab \
-                        gitlab-rake \
-                        gitlab:backup:restore \
-                        BACKUP=${BACKUP1%_*}
-                    do
-                        echo BULLSHIT &&
-                            bash
-                    done
-            done &&
+    ) | docker \
+        container \
+        exec \
+        --interactive \
+        gitlab \
+        gitlab-rake \
+        gitlab:backup:restore \
+        BACKUP=${BACKUP1%_*} &&
     docker container exec --interactive --tty gitlab gitlab-ctl start &&
     echo GITLAB_ROOT_PASSWORD=${GITLAB_ROOT_PASSWORD} &&
     echo GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN=${GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN} &&
