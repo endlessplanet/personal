@@ -137,8 +137,7 @@ export PATH=${HOME}/bin:${PATH} &&
                         gitlab-rake \
                         gitlab:backup:restore \
                         BACKUP=${BACKUP1%_*} &&
-                    sleep 10s &&
-                    (cat <<EOF
+                    while ! (cat <<EOF
 yes
 yes
 
@@ -151,6 +150,10 @@ EOF
                         gitlab-rake \
                         gitlab:backup:restore \
                         BACKUP=${BACKUP1%_*}
+                    do
+                        echo BULLSHIT &&
+                            sleep 10s
+                    done
             done &&
     docker container exec --interactive --tty gitlab gitlab-ctl start &&
     echo GITLAB_ROOT_PASSWORD=${GITLAB_ROOT_PASSWORD} &&
