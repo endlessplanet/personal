@@ -125,7 +125,7 @@ export PATH=${HOME}/bin:${PATH} &&
         --mount type=volume,source=gitlab-backup,destination=/var/backups \
         --workdir /var/backups/gitlab \
         alpine:3.4 \
-            ls -1 | sort | tail -n 1)
+            ls -1 | sort | tail -n 1 | tr -cd "[:print:]\n") &&
     BACKUP1=${BACKUP2%_*} &&
     (cat <<EOF
 yes
