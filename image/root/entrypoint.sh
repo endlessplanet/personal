@@ -125,7 +125,7 @@ export PATH=${HOME}/bin:${PATH} &&
         --mount type=volume,source=gitlab-backup,destination=/var/backups \
         --workdir /var/backups/gitlab \
         alpine:3.4 \
-            ls -1 | sort | tail -n 1 | head -n 1 | sed -e "s#^.*1#1#" -e "s#_gitlab.backup.tar.*\$##") &&
+            ls -1 | sort | tail -n 1 | head -n 1 | sed -e "s#^[^0-9]*##" -e "s#_gitlab.backup.tar.*\$##" -e "s#^.*m##") &&
     (cat <<EOF
 yes
 yes
