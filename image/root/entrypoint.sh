@@ -66,6 +66,7 @@ export PATH=${HOME}/bin:${PATH} &&
         alpine:3.4 \
             chmod 0777 gitlab &&
     docker \
+        container \
         run \
         --env AWS_ACCESS_KEY_ID \
         --env AWS_SECRET_ACCESS_KEY \
