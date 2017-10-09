@@ -116,7 +116,7 @@ export PATH=${HOME}/bin:${PATH} &&
     docker container exec --interactive --tty gitlab gitlab-ctl reconfigure &&
     docker container exec --interactive --tty gitlab gitlab-ctl stop unicorn &&
     docker container exec --interactive --tty gitlab gitlab-ctl stop sidekiq &&
-    BACKUP2=$(docker \
+    export BACKUP=$(docker \
         container \
         run \
         --interactive \
@@ -125,8 +125,7 @@ export PATH=${HOME}/bin:${PATH} &&
         --mount type=volume,source=gitlab-backup,destination=/var/backups \
         --workdir /var/backups/gitlab \
         alpine:3.4 \
-            ls -1 | sort | tail -n 1 | tr -cd '\11\12\15\40-\176') &&
-    export BACKUP1=${BACKUP2%_*} &&
+            ls -1 | sort | tail -n 1 | head -n 1 | sed -e "s#_gitlab.backup.tar\$##") &&
     (cat <<EOF
 yes
 yes
@@ -139,7 +138,7 @@ EOF
         gitlab \
         gitlab-rake \
         gitlab:backup:restore \
-        BACKUP=${BACKUP1%_*} &&
+        BACKUP=${BACKUP%$'\r'} &&
     docker container exec --interactive --tty gitlab gitlab-ctl start &&
     echo GITLAB_ROOT_PASSWORD=${GITLAB_ROOT_PASSWORD} &&
     echo GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN=${GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN} &&
