@@ -1,7 +1,7 @@
 #!/bin/sh
 
-trap bash EXIT &&
 export PATH=${HOME}/bin:${PATH} &&
+    trap cleanup EXIT &&
     docker network create system &&
     docker volume create gitlab-config &&
     docker volume create gitlab-backup &&
