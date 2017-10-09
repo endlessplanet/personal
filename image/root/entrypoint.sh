@@ -108,7 +108,7 @@ export PATH=${HOME}/bin:${PATH} &&
         --env DISPLAY \
         --network system \
         sassmann/debian-chromium &&
-    while [ $(docker inspect gitlab --format "{{ .State.Health.Status }}" gitlab) != "healthy" ]
+    while [ $(docker inspect --format "{{ .State.Health.Status }}" gitlab) != "healthy" ]
     do
         docker inspect gitlab --format "{{ .State.Health.Status }}" gitlab &&
             sleep 10s
@@ -137,6 +137,7 @@ export PATH=${HOME}/bin:${PATH} &&
                         gitlab-rake \
                         gitlab:backup:restore \
                         BACKUP=${BACKUP1%_*} &&
+                    sleep 10s &&
                     (cat <<EOF
 yes
 yes
