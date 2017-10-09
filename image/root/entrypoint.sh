@@ -125,7 +125,7 @@ export PATH=${HOME}/bin:${PATH} &&
         --mount type=volume,source=gitlab-backup,destination=/var/backups \
         --workdir /var/backups/gitlab \
         alpine:3.4 \
-            ls -1 | sort | tail -n 1 | head -n 1 | sed -e "s#_gitlab.backup.tar\$##") &&
+            ls -1 | sort | tail -n 1 | head -n 1 | sed -e "s#^.*1#1#" -e "s#_gitlab.backup.tar.*\$##") &&
     (cat <<EOF
 yes
 yes
@@ -138,7 +138,7 @@ EOF
         gitlab \
         gitlab-rake \
         gitlab:backup:restore \
-        BACKUP=${BACKUP%$'\r'} &&
+        BACKUP=${BACKUP} &&
     docker container exec --interactive --tty gitlab gitlab-ctl start &&
     echo GITLAB_ROOT_PASSWORD=${GITLAB_ROOT_PASSWORD} &&
     echo GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN=${GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN} &&
