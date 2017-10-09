@@ -84,8 +84,6 @@ export PATH=${HOME}/bin:${PATH} &&
             --include '*gitlab_backup.tar' \
             --recursive \
             s3://${GITLAB_BACKUP_BUCKET} .
-    export GITLAB_ROOT_PASSWORD=$(uuidgen) &&
-    export GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN=$(uuidgen) &&
     docker \
         container \
         create \
@@ -93,11 +91,19 @@ export PATH=${HOME}/bin:${PATH} &&
         --restart always \
         --mount type=volume,source=gitlab-config,destination=/etc/gitlab \
         --mount type=volume,source=gitlab-backup,destination=/var/backups \
-        --env GITLAB_ROOT_PASSWORD \
-        --env GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN \
+        --env GITLAB_ROOT_PASSWORD=$(uuidgen) \
+        --env GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN=$(uuidgen) \
         gitlab/gitlab-ce:latest &&
     docker network connect --alias gitlab system gitlab &&
     docker container start gitlab &&
+    docker \
+        container \
+        run \
+        --detach \
+        --name gitlab-runner \
+        --restart always \
+        --volume /var/run/docker.sock:/var/run/docker.sock:ro \
+        gitlab/gitlab-runner:v10.0.2 &&
     docker \
         container \
         run \
@@ -110,7 +116,7 @@ export PATH=${HOME}/bin:${PATH} &&
         sassmann/debian-chromium &&
     while [ $(docker inspect --format "{{ .State.Health.Status }}" gitlab) != "healthy" ]
     do
-        docker inspect gitlab --format "{{ .State.Health.Status }}" gitlab &&
+        echo starting gitlab &&
             sleep 10s
     done &&
     docker container exec --interactive --tty gitlab gitlab-ctl reconfigure &&
@@ -140,4 +146,25 @@ EOF
         gitlab:backup:restore \
         BACKUP=${BACKUP} &&
     docker container exec --interactive --tty gitlab gitlab-ctl start &&
+    while [ $(docker inspect --format "{{ .State.Health.Status }}" gitlab) != "healthy" ]
+    do
+        echo restarting gitlab &&
+            sleep 10s
+    done &&
+    docker \
+        container \
+        exec \
+        --interactive \
+        --tty \
+        gitlab-runner \
+            gitlab-runner \
+            register \
+            --non-interactive \
+            --registration-token ${GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN} \
+            --run-untagged true \
+            --name "standard" \
+            --limit 1 \
+            --executor docker \
+            --docker-image docker \
+            --docker-volumes /var/run/docker.sock:/var/run/docker.sock:ro &&
     bash

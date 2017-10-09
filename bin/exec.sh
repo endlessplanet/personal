@@ -31,6 +31,7 @@ DIND=$(mktemp) &&
         --env AWS_SECRET_ACCESS_KEY \
         --env AWS_DEFAULT_REGION \
         --env GITLAB_BACKUP_BUCKET \
+        --env GITLAB_ROOT_PASSWORD \
         endlessplanet/personal:$(git rev-parse --verify HEAD) &&
     docker network create $(uuidgen) > ${NET} &&
     docker network connect --alias docker $(cat ${NET}) $(cat ${DIND}) &&
