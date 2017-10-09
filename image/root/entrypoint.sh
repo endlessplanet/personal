@@ -116,7 +116,7 @@ export PATH=${HOME}/bin:${PATH} &&
     docker container exec --interactive --tty gitlab gitlab-ctl reconfigure &&
     docker container exec --interactive --tty gitlab gitlab-ctl stop unicorn &&
     docker container exec --interactive --tty gitlab gitlab-ctl stop sidekiq &&
-    BACKUP=$(docker \
+    BACKUP2=$(docker \
         container \
         run \
         --interactive \
