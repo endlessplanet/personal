@@ -161,6 +161,7 @@ EOF
             register \
             --non-interactive \
             --registration-token ${GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN} \
+            --url https://gitlab \
             --run-untagged true \
             --name "standard" \
             --limit 1 \
