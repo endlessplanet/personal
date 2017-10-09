@@ -127,9 +127,16 @@ export PATH=${HOME}/bin:${PATH} &&
         alpine:3.4 \
             ls -1 | sort | tail -n 1 | while read BACKUP2
             do
-                echo ${BACKUP2} &&
-                    echo ${BACKUP1} &&
                     BACKUP1=${BACKUP2%_*} &&
+                    echo \
+                        docker \
+                        container \
+                        exec \
+                        --interactive \
+                        gitlab \
+                        gitlab-rake \
+                        gitlab:backup:restore \
+                        BACKUP=${BACKUP1%_*} &&
                     (cat <<EOF
 yes
 yes
