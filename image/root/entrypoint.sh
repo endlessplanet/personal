@@ -152,7 +152,7 @@ EOF
                         BACKUP=${BACKUP1%_*}
                     do
                         echo BULLSHIT &&
-                            sleep 10s
+                            bash
                     done
             done &&
     docker container exec --interactive --tty gitlab gitlab-ctl start &&
