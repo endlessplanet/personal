@@ -116,7 +116,7 @@ export PATH=${HOME}/bin:${PATH} &&
     docker container exec --interactive --tty gitlab gitlab-ctl reconfigure &&
     docker container exec --interactive --tty gitlab gitlab-ctl stop unicorn &&
     docker container exec --interactive --tty gitlab gitlab-ctl stop sidekiq &&
-    BACKUP2=$(docker \
+    export BACKUP2=$(docker \
         container \
         run \
         --interactive \
@@ -126,7 +126,7 @@ export PATH=${HOME}/bin:${PATH} &&
         --workdir /var/backups/gitlab \
         alpine:3.4 \
             ls -1 | sort | tail -n 1 | tr -cd "[:print:]\n") &&
-    BACKUP1=${BACKUP2%_*} &&
+    export BACKUP1=${BACKUP2%_*} &&
     (cat <<EOF
 yes
 yes
