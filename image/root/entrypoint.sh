@@ -1,5 +1,6 @@
 #!/bin/sh
 
+trap bash EXIT &&
 export PATH=${HOME}/bin:${PATH} &&
     docker network create system &&
     docker volume create gitlab-config &&
