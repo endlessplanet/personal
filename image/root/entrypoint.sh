@@ -151,6 +151,7 @@ EOF
         echo restarting gitlab &&
             sleep 10s
     done &&
+    bash &&
     docker \
         container \
         exec \
