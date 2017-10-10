@@ -1,5 +1,8 @@
 #!/bin/sh
 
+###
+### READ https://github.com/sameersbn/docker-gitlab-ci-multi-runner
+###
 export PATH=${HOME}/bin:${PATH} &&
     trap cleanup EXIT &&
     docker network create system &&
@@ -103,6 +106,7 @@ export PATH=${HOME}/bin:${PATH} &&
         --name gitlab-runner \
         --restart always \
         --volume /var/run/docker.sock:/var/run/docker.sock:ro \
+        --network standard \
         gitlab/gitlab-runner:v10.0.2 &&
     docker \
         container \
