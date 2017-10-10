@@ -106,7 +106,9 @@ export PATH=${HOME}/bin:${PATH} &&
         --name gitlab-runner \
         --restart always \
         --volume /var/run/docker.sock:/var/run/docker.sock:ro \
+        --volume gitlab-config:/etc/gitlab:ro \
         --network standard \
+        --env CA_CERTIFICATES_PATH=/etc/gitlab/ssl/gitlab.crt \
         gitlab/gitlab-runner:v10.0.2 &&
     docker \
         container \
