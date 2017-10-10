@@ -157,7 +157,6 @@ EOF
         echo restarting gitlab &&
             sleep 10s
     done &&
-    bash &&
     docker \
         container \
         exec \
@@ -166,13 +165,13 @@ EOF
         gitlab-runner \
             gitlab-runner \
             register \
+            --executor docker \
             --non-interactive \
             --registration-token ${GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN} \
             --url https://gitlab \
-            --run-untagged true \
+            --run-untagged \
             --name "standard" \
             --limit 1 \
-            --executor docker \
             --docker-image docker \
             --docker-volumes /var/run/docker.sock:/var/run/docker.sock:ro &&
     bash
