@@ -86,7 +86,7 @@ export PATH=${HOME}/bin:${PATH} &&
             cp \
             --include '*gitlab_backup.tar' \
             --recursive \
-            s3://${GITLAB_BACKUP_BUCKET} .
+            s3://${GITLAB_BACKUP_BUCKET} . &&
     docker \
         container \
         create \
@@ -107,7 +107,7 @@ export PATH=${HOME}/bin:${PATH} &&
         --restart always \
         --volume /var/run/docker.sock:/var/run/docker.sock:ro \
         --volume gitlab-config:/etc/gitlab:ro \
-        --network standard \
+        --network system \
         --env CA_CERTIFICATES_PATH=/etc/gitlab/ssl/gitlab.crt \
         gitlab/gitlab-runner:v10.0.2 &&
     docker \
