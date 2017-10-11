@@ -7,7 +7,7 @@ CIDFILE=$(mktemp) &&
         run \
         --cidfile ${CIDFILE} \
         --detach \
-        sapk/cloud9
+        sapk/cloud9 \
             --auth \
             user:password &&
     docker network connect --alias ${1} system $(cat ${CIDFILE})
