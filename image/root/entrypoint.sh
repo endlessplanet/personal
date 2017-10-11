@@ -174,5 +174,6 @@ EOF
             --name "standard" \
             --limit 1 \
             --docker-image docker \
-            --docker-volumes /var/run/docker.sock:/var/run/docker.sock:ro &&
+            --docker-volumes /var/run/docker.sock:/var/run/docker.sock:ro \
+            --docker-network-mode system &&
     bash
