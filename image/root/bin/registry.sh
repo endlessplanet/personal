@@ -1,6 +1,7 @@
 #!/bin/sh
 
 docker volume create auth &&
+    docker volume create registry-config &&
     docker \
         container \
         run \
@@ -12,6 +13,7 @@ docker volume create auth &&
             htpasswd \
             user \
             password &&
+
     docker volume create registry-certs &&
     cat \
         /opt/docker/ssl/registry.txt | docker \
@@ -29,21 +31,42 @@ docker volume create auth &&
             -out registry.crt \
             -days 365 \
             -nodes &&
+    docker volume create dind-certs &&
+    docker container run --interactive --tty --rm --volume registry-certs:/input:ro --volume dind-certs:/etc/docker/certs.d alpine:3.4 mkdir /etc/docker/certs.d/registry:5000 &&
+    docker container run --interactive --tty --rm --volume registry-certs:/input:ro --volume dind-certs:/etc/docker/certs.d alpine:3.4 cp /input/registry.crt /etc/docker/certs.d/registry:5000/ca.crt &&
     docker \
         container \
-        run \
+        create \
+        --name dind \
+        --privileged \
+        --volume dind-certs:/etc/docker/certs.d \
+        docker:17.09.0-ce-dind \
+            --host tcp://0.0.0.0:3276 &&
+    docker network connect --alias dind system dind &&
+    docker start dind &&
+    
+    
+    docker \
+        container \
+        create \
         --name registry \
+        --publish 80:80 \
         --publish 443:443 \
         --publish 5000:5000 \
-        --detach \
-        --mount type=volume,source=auth,destination=/auth \
-        --env REGISTRY_AUTH=htpasswd \
-        --env "REGISTRY_AUTH_HTPASSWD_REALM=Registry Realm" \
-        --env REGISTRY_AUTH_HTPASSWD_PATH=/auth/htpasswd \
         --mount type=volume,source=registry-certs,destination=/certs \
         --env REGISTRY_HTTP_ADDR=0.0.0.0:80 \
         --env REGISTRY_HTTP_TLS_CERTIFICATE=/certs/registry.crt \
         --env REGISTRY_HTTP_TLS_KEY=/certs/registry.key \
         --env REGISTRY_HTTP_SECRET=$(uuidgen) \
+        --mount type=volume,source=registry-auth,destination=/auth \
+        --env REGISTRATION_AUTH_SILLY_REALM=silly-realm \
+        --env REGISTRATION_AUTH_SILLY_SERVICE=silly-service \
         registry:2.5.2 &&
-    docker network connect --alias registry system registry
+    docker network connect --alias registry system registry &&
+    docker container start registry &&
+    docker run --interactive --tty --rm --volume /var/run/docker.sock:/var/run/docker.sock:ro --volume dind-certs:/etc/docker/certs.d --network system docker:17.09.0 docker image tag docker:17.09.0 registry/docker:17.09.0 &&
+    docker run --interactive --tty --rm --volume /var/run/docker.sock:/var/run/docker.sock:ro --network system docker:17.09.0 docker image push registry/docker:17.09.0 &&
+
+    docker run --interactive --tty --rm --env DOCKER_HOST=tcp://dind:3276 --network system docker:17.09.0 docker image tag docker:17.09.0 registry/docker:17.09.0 &&
+    docker run --interactive --tty --rm --volume /var/run/docker.sock:/var/run/docker.sock:ro --network system docker:17.09.0 docker image push registry/docker:17.09.0 &&
+    true

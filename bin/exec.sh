@@ -3,14 +3,33 @@
 DIND=$(mktemp) &&
     WORK=$(mktemp) &&
     NET=$(mktemp) &&
+    CERTS=$(mktemp) &&
     rm -f ${DIND} ${WORK} ${NET} &&
     cleanup(){
         docker container stop $(cat ${DIND}) $(cat ${WORK}) &&
             docker container rm --volumes $(cat ${DIND}) $(cat ${WORK}) &&
             docker network rm $(cat ${NET}) &&
-            rm -f ${DIND} ${WORK} ${NET}
+            docker volume rm $(cat ${CERTS}) &&
+            rm -f ${DIND} ${WORK} ${NET} ${CERTS}
     } &&
     trap cleanup EXIT &&
+    docker volume create certs &&
+    cat \
+        image/root/ssl/registry.txt | docker \
+        container \
+        run \
+        --interactive \
+        --rm \
+        --mount type=volume,source=registry-certs,destination=/certs \
+        --workdir /certs \
+        jordi/openssl \
+            openssl \
+            req -x509 \
+            -newkey rsa:4096 \
+            -keyout registry.key \
+            -out registry.crt \
+            -days 365 \
+            -nodes 
     docker \
         container \
         create \
