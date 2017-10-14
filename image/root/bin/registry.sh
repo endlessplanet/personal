@@ -1,7 +1,6 @@
 #!/bin/sh
 
-docker volume create auth &&
-    docker volume create registry-config &&
+docker volume create registry-auth &&
     docker \
         container \
         run \
@@ -13,7 +12,6 @@ docker volume create auth &&
             htpasswd \
             user \
             password &&
-
     docker volume create registry-certs &&
     cat \
         /opt/docker/ssl/registry.txt | docker \
@@ -31,21 +29,9 @@ docker volume create auth &&
             -out registry.crt \
             -days 365 \
             -nodes &&
-    docker volume create dind-certs &&
-    docker container run --interactive --tty --rm --volume registry-certs:/input:ro --volume dind-certs:/etc/docker/certs.d alpine:3.4 mkdir /etc/docker/certs.d/registry:5000 &&
-    docker container run --interactive --tty --rm --volume registry-certs:/input:ro --volume dind-certs:/etc/docker/certs.d alpine:3.4 cp /input/registry.crt /etc/docker/certs.d/registry:5000/ca.crt &&
-    docker \
-        container \
-        create \
-        --name dind \
-        --privileged \
-        --volume dind-certs:/etc/docker/certs.d \
-        docker:17.09.0-ce-dind \
-            --host tcp://0.0.0.0:3276 &&
-    docker network connect --alias dind system dind &&
-    docker start dind &&
-    
-    
+    docker volume create docker-certs &&
+    docker container run --interactive --tty --rm --volume docker-certs:/etc/docker/certs.d alpine:3.4 mkdir /etc/docker/certs.d/registry:5000 &&
+    docker container run --interactive --tty --rm --volume docker-certs:/etc/docker/certs.d --volume registry-certs:/certs:ro alpine:3.4 cp /certs/registry.crt /etc/docker/certs.d/registry:5000/ca.crt &&
     docker \
         container \
         create \
