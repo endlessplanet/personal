@@ -16,7 +16,7 @@ DIND=$(mktemp) &&
     trap cleanup EXIT &&
     docker volume create > ${CERTS} &&
     cat \
-        /opt/docker/ssl/registry.txt | docker \
+        image/root/ssl/registry.txt | docker \
         container \
         run \
         --interactive \
@@ -30,10 +30,13 @@ DIND=$(mktemp) &&
             -keyout registry.key \
             -out registry.crt \
             -days 365 \
-            -nodes
+            -nodes &&
     docker \
         container \
         create \
+        --publish 5000:5000 \
+        --publish 80:80 \
+        --publish 443:443 \
         --cidfile ${REG} \
         --volume $(cat ${CERTS}):/certs \
         --env REGISTRY_HTTP_ADDR=0.0.0.0:80 \
@@ -42,7 +45,8 @@ DIND=$(mktemp) &&
         --env REGISTRY_HTTP_SECRET=$(uuidgen) \
         --env REGISTRATION_AUTH_SILLY_REALM=silly-realm \
         --env REGISTRATION_AUTH_SILLY_SERVICE=silly-service \
-        registry:2.5.2 
+        registry:2.5.2 &&
+    echo REG=${REG} &&
     docker \
         container \
         create \
@@ -71,5 +75,6 @@ DIND=$(mktemp) &&
     docker network connect --alias registry $(cat ${NET}) $(cat ${REG}) &&
     docker network connect --alias docker $(cat ${NET}) $(cat ${DIND}) &&
     docker network connect $(cat ${NET}) $(cat ${WORK}) &&
+    docker container start $(cat ${REG}) &&
     docker container start $(cat ${DIND}) &&
     docker container start --interactive $(cat ${WORK})
